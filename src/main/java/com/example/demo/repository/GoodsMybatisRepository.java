@@ -2,9 +2,11 @@ package com.example.demo.repository;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.db.ShopDBManager;
 import com.example.demo.vo.GoodsVO;
-
+@Repository
 public class GoodsMybatisRepository {
 	
 	//전체 상품목록 조회
