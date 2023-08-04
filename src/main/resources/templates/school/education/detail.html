@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">"
 <head>
 <title>교육 상세페이지</title>
 <meta charset="UTF-8">
@@ -34,7 +34,7 @@
 	    <div class="col-md-8">
 			
 			<!-- 상세 메인이미지 -->
-			<article class="blog-post"><img class="detailImg" src="/images/education/edu20.jpg" ><br />
+			<article class="blog-post"><img class="detailImg" th:src="@{'/images/education/'+${e.eduFile}}" ><br />
 			</article>
 			
 			<!-- 그룹 버튼 -->
@@ -53,52 +53,7 @@
 			<!-- 상세 -->
 		    <article class="blog-post">
 			<div  id="detail" class="content">
-		        <h2 class="blog-post-title" style="text-align: center;">위얼스학교 X 송하텃밭정원연구소</h2>
-		        <p class="blog-post-meta" style="text-align: center;">"순환하는 지구텃밭" </p>
-		        <p style="text-align: center; margin-bottom: 50px;">순환하는 송하 텃밭정원 연구소와 함께 최대한 인위적인 젓을 줄인 자연스러운 텃밭 농사를 꾸려갑니다. 토종씨앗, 음식 부산물로 퇴비 만들기 등 흙을 살리는 방법으로 텃밭을 만들어갑니다.</p>
-		        <hr>
-		 		<h2>Heading</h2>
-		        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-		        <br />
-		        <h3>Sub-heading</h3>
-		        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-		        <pre><code>Example code block</code></pre>
-		        <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
-			<br />
-	       <h3>Example table</h3>
-	        <table class="table">
-	          <thead>
-	            <tr>
-	              <th>Name</th>
-	              <th>Upvotes</th>
-	              <th>Downvotes</th>
-	            </tr>
-	          </thead>
-	          <tbody>
-	            <tr>
-	              <td>Alice</td>
-	              <td>10</td>
-	              <td>11</td>
-	            </tr>
-	            <tr>
-	              <td>Bob</td>
-	              <td>4</td>
-	              <td>3</td>
-	            </tr>
-	            <tr>
-	              <td>Charlie</td>
-	              <td>7</td>
-	              <td>9</td>
-	            </tr>
-	          </tbody>
-	          <tfoot>
-	            <tr>
-	              <td>Totals</td>
-	              <td>21</td>
-	              <td>23</td>
-	            </tr>
-	          </tfoot>
-	        </table>
+		         <img class="img-fluid" th:src="@{'/images/education/detail/'+${e.eduDetailFile}}"  />
 			</div>
 			 </article>
 			 
@@ -222,7 +177,7 @@
 			                <td>환불관련문의드립니다.</td>
 			                <td>Doe</td>
 			                <td>2023-07-13</td>
-			            </tr>
+			            </tr> 
 			            <tr id="details2" class="collapse">
 			                <td colspan="4" class="post-details">
 			                    <label for="password2">비밀번호를 입력하세요:</label>
@@ -269,26 +224,29 @@
 			  
 			<!-- 제목, 가격 --> 
 	        <div class="p-4 mb-3 bg-white rounded" style="border: 1px solid lightgrey;">
-	      		<h4 class="fst-basic">[모집중] 순환하는 텃밭가꾸기 
-				</h4>
+	      		<div>[<span  style="font-weight: bold;" th:text="${e.eduStatus}"></span>] <span  style="font-weight: bold;" th:text="${e.eduName}"></span></div>
+				<br />
 	           <div class="row">
 	          <div class="col"><p class="mb-0" style="color: #43a06f; font-weight: bold;"> 가격문의 </p></div>
-	           <div class="col"><a href="#" onclick="changeImage('2')" style="margin-left: 100px;"><img id="2" src="/images/education/whiteHeart.jpg" style="width:28px;" /></a></div>
+	          <div class="col">
+				   <a th:onclick="'changeImage(' + ${e.eduNO} + ')'"  style="margin-left: 100px;">
+	               <img th:id="${e.eduNO}" src="/images/education/whiteHeart.jpg" style="width:28px" /></a>
+	          </div>	          
 	        </div>
 	        </div>
+	        
 	        
 	        <!-- 요약 --> 
 	        <div class="p-4">
 	          <ol class="list-unstyled mb-0">
 				<li style="font-weight: bold;">내용</li>
-	            <li>순환하는 송하 텃밭정원 연구소와 함께 최대한 인위적인 젓을 줄인 자연스러운 텃밭 농사를 꾸려갑니다. 
-					토종씨앗, 음식 부산물로 퇴비 만들기 등 흙을 살리는 방법으로 텃밭을 만들어갑니다.</li>
-				<li style="font-weight: bold;">날짜</li>	
-	            <li>2023년 7월 26일</li>
-	            <li style="font-weight: bold;">인원</li>
-	            <li>20명</li>
-	            <li style="font-weight: bold;">장소</li>
-	            <li>남태령 산적마을농장</li>
+	            <li th:text="${e.eduContent}"></li>
+	            <li style="font-weight: bold;">교육대상</li>
+	            <li th:text="${e.eduApp}"></li>
+	            <li style="font-weight: bold;">출처</li>
+	            <li th:text="${e.educator}"></li>
+	            <li style="font-weight: bold;">작성날짜</li>
+	            <li th:text="${e.eduSysdate}"></li>
 	          </ol>
 	        </div>
 	        
@@ -296,7 +254,7 @@
 			<div class="p-4">
 	       		<a class="btn custom-btn" style="width: 320px; " href="/school/education/insert">신청하기</a>
 			</div>
-			
+	      </div>
 	      </div>
 	    </div>
 	    

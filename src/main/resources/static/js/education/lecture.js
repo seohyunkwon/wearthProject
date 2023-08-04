@@ -9,24 +9,39 @@
   console.log("today.getDate() : " + today.getDate());
   console.log("today.getDay() : " + today.getDay());
 	
-	
-	
-	//요일 구하는 함수
-	
+
 	//특정 날짜의 요일 구하기
     function getInputDayLabel() {
 
         var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
 
-        var today = new Date('2020-07-27').getDay();
+        var today = new Date('2023-08-03').getDay();
         var todayLabel = week[today];
 
         return todayLabel;
     }
 	
 	
-	//그리기 스크립트
+		
+// 원하는 날짜 영역에 내용 추가하기
+function addContentToDay(lecNO, lecDate, lecName) {
+	//var lecDate = $("#lecDate").text();
+	//var lecName = $("#lecName").text();
+    var tdElement = document.getElementById(lecDate); // 해당 날짜에 대한 td 요소 가져오기
+
+    if (tdElement) {
+        var existingContent = tdElement.innerHTML;
+        var str = existingContent + "<br><div class='title'><a href='/school/lecture/detail/" + lecNO + "'>" + lecName + "</a></div>";
+        tdElement.innerHTML = str;
+
+        // 추가: lecDate를 콘솔에 출력하여 확인
+        console.log("lecDate 데이터: " + lecDate);
+    } else {
+        console.log("해당 날짜의 td 요소를 찾을 수 없습니다: " + lecDate);
+    }
+}
 	
+	//그리기 스크립트
 	var today = new Date(); //오늘 날짜        
 	var date = new Date();
 	
@@ -49,7 +64,7 @@
 		today = new Date();
 		autoReload();
 	}
-
+	
 	function autoReload()
 	{
 		var nMonth = new Date(today.getFullYear(), today.getMonth(), 1); //현재달의 첫째 날
@@ -93,50 +108,42 @@
 			cell = row.insertCell();
 			
 		}
-
+		
 
 		// 달력 출력
-		for (i = 1; i <= lastDate.getDate(); i++) // 1일부터 마지막 일까지
-		{ 
-			cell = row.insertCell();
+	    for (i = 1; i <= lastDate.getDate(); i++) // 1일부터 마지막 일까지
+	    {
+	        cell = row.insertCell();
+	
+	        var str = "";
+	
+	        str += "<div>" + i + "</div>";
+	        var day = (i < 10) ? "0" + i : i;
+	        var lecDate = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + day; // 날짜를 "YYYY-MM-DD" 형식으로 생성
+	        str += "<div id='" + lecDate + "'></div>";
+	        
+			console.log("lecDate 데이터: " + lecDate);
 			
-			var str="";
-			
-			str += "<div>"+i+"</div>";
-			var day = (i<10) ? "0"+i : i;            	
-			str += "<div id='"+day+"'></div>"; //나중에 원하는 날에 일정을 넣기위해 id값을 날자로 설정
-			cell.innerHTML = str;
-			
-			cnt = cnt + 1;
+	        cnt = cnt + 1;
+        
 			if (cnt % 7 == 6) {//토요일
-				var str="";
-				str += "<div>"+i+"</div>";
-				var day = (i<10) ? "0"+i : i;            	
-				str += "<div id='"+day+"'>";
-				str += "</div>";
-				cell.innerHTML = str;
-				cell.style.color = "#009de0";
-				                  
+			    cell.style.color = "#009de0";
 			}
 			if (cnt % 7 == 0) { //일요일
-				var str="";
-				str += "<div>"+i+"</div>";
-				var day = (i<10) ? "0"+i : i;            	
-				str += "<div id='"+day+"'>";
-				str += "</div>";
-				cell.innerHTML = str;
-				row = calendar.insertRow();// 줄 추가
 				cell.style.color = "#ed5353";
-				
 			}
 			
+			cell.innerHTML = str;
+			
+			if (cnt % 7 == 0) { //일요일
+				row = calendar.insertRow();// 줄 추가
+			}
 			//마지막 날짜가 지나면 일요일까지 칸 그리기
 			if(lastDate.getDate() == i && ((cnt % 7) != 0)){
 				var add = 7 - (cnt % 7);
 				for(var k = 1; k <= add; k++){
 					cell = row.insertCell();
 					cnt = cnt + 1;
-					
 				}
 			}
 			
@@ -160,20 +167,24 @@
 					}
 				}
 			}
-			  
 		}
+			
 		
-		//원하는 날짜 영역에 내용 추가하기
-		var tdId = "05"; //5일
-		var str = "";
-		str += "<br><div class='title'><a href='./detail'>탄소 중립의 길</a><div>";
-		document.getElementById(tdId).innerHTML = str;
-		
-		//원하는 날짜 영역에 내용 추가하기
-		var tdId = "10"; //10일
-		var str = "";
-		str += "<br><div class='title'><a href='/detail-page/10'>함께 하는 분리수거</a><div>";
-		document.getElementById(tdId).innerHTML = str;
+		/*
+		addContentToDay("2023-08-02", "8월 2일 토요일 내용이다."); // 2023년 8월 5일에 내용 추가
+		addContentToDay("2023-08-06", "8월 6일 일요일 내용이다."); // 2023년 8월 6일에 내용 추가
+   		addContentToDay("2023-08-10", "8월 10일 내용이다."); // 2023년 8월 10일에 내용 추가
+   		addContentToDay("2023-08-15", "8월 15일 내용이다."); // 2023년 8월 15일에 내용 추가
+   		addContentToDay("2023-08-18", "8월 18일 내용이다."); // 2023년 8월 18일에 내용 추가
+   		*/
+   		
+   		var arr = $(".lec");
+   		$.each(arr, function(){
+			   var no = $(this).attr("lecNO");
+			   var d = $(this).attr("lecDate");
+			   var n = $(this).attr("lecName");
+			  addContentToDay(no,d,n);
+		   } )
 	}
-
+autoReload();
 	

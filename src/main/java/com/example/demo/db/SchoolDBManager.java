@@ -13,18 +13,20 @@ public class SchoolDBManager extends DBManager{
 
 	// lecture
 		
-		public static List<LectureVO> findBylecDateList(String lecDate){
+		//강의 전체목록 가져오기 / 날짜 정보 2023-08-19 형태로 가져오기
+		public static List<LectureVO> findAllLecture () {
 			SqlSession session = sqlSessionFactory.openSession();
-			List<LectureVO> list = session.selectList("lecture.findBylecDateList", lecDate);
+			List<LectureVO> list = session.selectList("lecture.findAllLecture");
 			session.close();
 			return list;
 		}
 		
-		public static List<LectureVO> listDate (String date) {
+		public static LectureVO findByNoLecture(int lecNO){
+			LectureVO l = null;
 			SqlSession session = sqlSessionFactory.openSession();
-			List<LectureVO> list = session.selectOne("lecture.listDate", date);
+			l = session.selectOne("lecture.findByNoLecture", lecNO);
 			session.close();
-			return list;
+			return l;
 		}
 		
 		public static int insertLecture (LectureVO l) {
@@ -36,6 +38,7 @@ public class SchoolDBManager extends DBManager{
 			return re;
 		}
 		
+		/* JPA 사용으로 삭제예정
 		public static int updateLecture(LectureVO l) {
 			int re = -1;
 			SqlSession session = sqlSessionFactory.openSession(true);
@@ -51,23 +54,27 @@ public class SchoolDBManager extends DBManager{
 			session.close();
 			return re;
 		}
+		*/
 	
 		
 	// education
-	public static List<EducationVO> findAllEducation(HashMap<String, Object> map){
-		SqlSession session = sqlSessionFactory.openSession();
-		List<EducationVO> list = session.selectList("education.findAllEducation", map);
-		session.close();
-		return list;
-	}	
-	
-	public static int getTotalRecordEducation()	{
+		
+	public static int getTotalRecordEducation(HashMap<String, Object> map)	{
 		int n = 0;
 		SqlSession session = sqlSessionFactory.openSession();
-		n = session.selectOne("education.getTotalRecordEducation");
+		n = session.selectOne("education.getTotalRecordEducation", map);
+		System.out.println("dbManager getTotal map : " + map);
+		System.out.println("dbManager getTotal n(전체레코드) : " + n);
 		session.close();
 		return n;
 	}
+		
+	public static List<EducationVO> findAllEducation(HashMap<String, Object> map){
+		SqlSession session = sqlSessionFactory.openSession();
+		List<EducationVO> list = session.selectList("education.findAllEducation",map);
+		session.close();
+		return list;
+	}	
 	
 	public static EducationVO findByNoEducation (int eduno) {
 		EducationVO e = null;

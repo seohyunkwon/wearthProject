@@ -10,12 +10,16 @@ import com.example.demo.vo.LectureVO;
 
 @Repository
 public class LectureMyBatisRepository {
-
-	public List<LectureVO> findBylecDateList(String lecDate){
-		return SchoolDBManager.findBylecDateList(lecDate);
+	
+	public List<LectureVO> findAllLecture() {
+		return SchoolDBManager.findAllLecture();
 	}
 	
-	public List<LectureVO> listDate(String date) {
-		return SchoolDBManager.listDate(date);
+	public LectureVO findByNoLecture(int lecNO){
+		return SchoolDBManager.findByNoLecture(lecNO);
+	}
+	
+	public int insertLecture(LectureVO l) {
+		return SchoolDBManager.insertLecture(l);
 	}
 }

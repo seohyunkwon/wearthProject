@@ -11,3 +11,21 @@ function changeImage(id) {
     isLiked[id] = false;
   }
 }
+
+
+// 검색 기능 category, search 값 받아서 url로 넘기기 
+
+$(function(){
+	
+	$("#btnSearch").click(function(){
+		var category = $("#category").val();
+		var search = $("#search").val();
+		
+		console.log("category :"+category);
+		console.log("search :"+search);
+		if( search != null){
+			location.href="/school/education/list/" + category + "/" + search+ "/1";
+		}
+	})
+	
+})

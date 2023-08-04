@@ -9,12 +9,6 @@ public class TestController {
 	public void index() {
 	}
 	
-	@GetMapping("school/lecture/list")
-	public void list2() {
-	}
-	@GetMapping("school/lecture/detail")
-	public void detail() {}
-	
 	@GetMapping("opinion")
 	public void list3() {
 	}

@@ -23,7 +23,13 @@ public class EducationService {
 	private EducationMyBatisRepository dao_MB;
 
 	//MB (조회)
+	
+	public int getTotalRecordEducation(HashMap<String, Object> map) {
+		return dao_MB.getTotalRecordEducation(map);
+	}
+	
 	public List<EducationVO> findAllEducation(HashMap<String, Object> map){
+		System.out.println("map: "+map);
 		return dao_MB.findAllEducation(map);
 	}
 	
@@ -31,9 +37,7 @@ public class EducationService {
 		return dao_MB.findByNoEducation(eduNO);
 	}
 	
-	public int getTotalRecordEducation() {
-		return dao_MB.getTotalRecordEducation();
-	}
+	
 	
 	//JPA (추가, 수정, 삭제)
 	

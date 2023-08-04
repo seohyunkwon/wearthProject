@@ -21,5 +21,6 @@ public class EducationVO {
 	private String educator;
 	private String eduPhone;
 	private String eduFile;
+	private String eduDetailFile;
 	private String eduSysdate;
 }
