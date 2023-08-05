@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.security;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -36,8 +37,8 @@ public class KakaoLoginService {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("POST");
-			// setDoOutput()은 OutputStream으로 POST 데이터를 넘겨 주겠다는 옵션이다.
-			// POST 요청을 수행하려면 setDoOutput()을 true로 설정한다.
+			// setDoOutput()은 OutputStream으로 POST 데이터를 넘겨 주겠다는 옵션
+			// POST 요청을 수행하려면 setDoOutput()을 true로 설정
 			conn.setDoOutput(true);
 			
 			// POST 요청에서 필요한 파라미터를 OutputStream을 통해 전송
@@ -114,6 +115,14 @@ public class KakaoLoginService {
 	    }
 	    
 	    return Optional.empty();
+	}
+	
+	public String makePwd() {
+	    StringBuilder pwd = new StringBuilder();
+	    SecureRandom r = new SecureRandom();
+	    pwd.append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9))
+	            .append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A'));
+	    return pwd.toString();
 	}
 
 }

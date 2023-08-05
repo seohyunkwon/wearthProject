@@ -8,11 +8,23 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+
+@Component
 public class CustomMailSender {
 
 	@Autowired
-	public static JavaMailSender mailSender;
+	private JavaMailSender javaMailSender;
+	
+	private static JavaMailSender mailSender;
+	
+	@PostConstruct
+	public void init() {
+		this.mailSender = javaMailSender;
+	}
+	
 
 	public static void sendEmail(String email, String subject, String text) {
 		try {

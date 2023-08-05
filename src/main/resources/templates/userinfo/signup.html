@@ -60,11 +60,9 @@
 					<div class="row mb-1 position-relative">
 						<div class="div-label row">
 							<label for="inputPwd" class="form-label text-start col-sm-4">비밀번호</label>
-							<div class="text-end detail col-sm-8">8~14자리 사이의 암호를 입력해주세요.</div>
 						</div>
 						<div class="input-group col">
 							<input type="password" class="form-control input" id="inputPwd" name="pwd" required>
-							<div class="invalid-tooltip">비밀번호를 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -76,7 +74,6 @@
 						</div>
 						<div class="input-group col">
 							<input type="password" class="form-control input" id="inputPwdCheck">
-							<div class="invalid-tooltip">비밀번호를 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -86,7 +83,6 @@
 							<label for="inputName" class="form-label text-start">이름</label>
 							<div>
 								<input type="text" class="form-control input" id="inputName" name="u_name" required>
-								<div class="invalid-tooltip">이름을 입력해주세요.</div>
 							</div>
 						</div>
 
@@ -117,7 +113,6 @@
 							<input type="text" class="form-control input" id="inputNickname" name="nickname" required>
 							<button class="btn id-check-btn custom-btn" type="button"
 								onclick="checkNickname()">중복확인</button>
-							<div class="invalid-tooltip">닉네임을 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -131,7 +126,6 @@
 							<span style="padding-top: 5px;">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
 							<input type="text" class="form-control input" id="inputPhone3" required>
 							<input type="hidden" name="phone" id="finalPhone">
-							<div class="invalid-tooltip">전화번호를 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -139,6 +133,7 @@
 					<div class="row mb-1 position-relative">
 						<label for="inputEmail" class="form-label text-start">이메일</label>
 						<div class="input-group col">
+							<input type="hidden" name="email" id="finalEmail" required>
 							<input type="text" class="form-control input" id="inputEmail" required>
 							<span style="padding: 5px;">&nbsp;@&nbsp;</span>
 							<select class="form-select input" id="inputEmailUrl">
@@ -148,10 +143,8 @@
 								<option value="kakao.com">kakao.com</option>
 								<option value="gmail.com">gmail.com</option>
 							</select>
-							<input type="hidden" name="email" id="finalEmail">
 							<button class="btn id-check-btn custom-btn" type="button"
 								onclick="checkEmail()">인증하기</button>
-							<div class="invalid-tooltip">이메일을 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -162,7 +155,6 @@
 							<input type="password" class="form-control input" id="inputEmailCheck" disabled>
 							<button class="btn id-check-btn custom-btn" type="button"
 								onclick="checkEmailCheck()">확인</button>
-							<div class="invalid-tooltip">인증번호를 입력해주세요.</div>
 						</div>
 					</div>
 
@@ -171,7 +163,6 @@
 						<label for="inputBirth" class="form-label text-start">생년월일</label>
 						<div class="input-group col">
 							<input type="date" class="form-control input" id="inputBirth" name="date_birth" required>
-							<div class="invalid-tooltip">생년월일을 선택해주세요.</div>
 						</div>
 					</div>
 
@@ -183,7 +174,6 @@
 								onclick="swal('주소를 검색해주세요', '검색을 통해 주소를 입력해주세요.', 'info');" required readonly>
 							<button class="btn id-check-btn custom-btn" type="button"
 								onclick="searchResidence()">검색</button>
-							<div class="invalid-tooltip">주소를 입력해주세요.</div>
 						</div>
 					</div>
 
