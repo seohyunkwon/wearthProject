@@ -12,7 +12,7 @@
 		<!-- 박지영 -->
 		<typeAlias type="com.example.demo.vo.GoodsVO"
 			alias="goodsVO" />
-		<typeAlias type="com.example.demo.vo.GcategoryVO"
+		<typeAlias type="com.example.demo.vo.GoodscategoryVO"
 			alias="categoryVO" />
 		<typeAlias type="com.example.demo.vo.OpinionVO"
 			alias="opinionVO" />
