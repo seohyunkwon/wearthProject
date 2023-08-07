@@ -19,12 +19,7 @@ public class AdminController {
     }
 
     //*****************************USER***************************//
-    //UserDashBoard
-    @GetMapping("/adminUserDashBoard")
-    public String adminUserDashBoard(){
-        return "admin/User/User";
-    }
-
+    // 회원관리, 운영자관리 페이지
 
     //UserList
     @GetMapping("/adminUserList")
@@ -39,17 +34,22 @@ public class AdminController {
         return "admin/User/AdminList";
     }
 
-    @GetMapping("/adminContainerU")
-    public String admin4(){
-        return "admin/Container/ContainerUserList";
-    }
-
     //*****************************Act***************************//
 
     //Act
 
-    //WearthSchool
+    //*****************************School***************************//
+    //강연관리, 교육관리, 문의게시판
 
+    @GetMapping("/adminSchoolEducation")
+    public String adminEducation(){
+        return "admin/School/SchoolEducation";
+    }
+
+    @GetMapping("/adminSchoolLecture")
+    public String adminLecture(){
+        return "admin/School/SchoolLecture";
+    }
     //Shopping
 
 }

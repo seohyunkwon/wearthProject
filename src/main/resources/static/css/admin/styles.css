@@ -21,7 +21,9 @@ main {
   overflow-y: auto;
   /* 수직 스크롤 허용 */
   display: flex;
+
 }
+
 
 :root {
   --phoenix-gray-soft: #0f111a;
