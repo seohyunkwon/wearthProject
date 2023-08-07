@@ -21,7 +21,7 @@ public class OrdersDBManager extends DBManager {
 		return order;
 	}
 
-	public static List<OrdersDetailGoodsVO> findByOrdersNo(int ordersno) {
+	public static List<OrdersDetailGoodsVO> findListOrdersDetailGoodsByOrdersNo(int ordersno) {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<OrdersDetailGoodsVO> list = session.selectList("orders.findListOrdersDetailGoods", ordersno);
 		session.close();

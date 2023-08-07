@@ -45,16 +45,16 @@
 		<!-- 전수진 -->
 		<!-- 우종호 -->
 		<!-- 권서현 -->
-		<mapper resource="com/example/demo/db/ordersMapper.xml" />
+		<mapper resource="com/example/demo/mapper/ordersMapper.xml" />
 		<!-- 박지영 -->
-		<mapper resource="com/example/demo/db/goodsMapper.xml" />
-		<mapper resource="com/example/demo/db/GoodsCategoryMapper.xml" />
-		<mapper resource="com/example/demo/db/opinionMapper.xml" />
-		<mapper resource="com/example/demo/db/cartMapper.xml" />
+		<mapper resource="com/example/demo/mapper/goodsMapper.xml" />
+		<mapper resource="com/example/demo/mapper/GoodsCategoryMapper.xml" />
+		<mapper resource="com/example/demo/mapper/opinionMapper.xml" />
+		<mapper resource="com/example/demo/mapper/cartMapper.xml" />
 		<!-- 류예인 -->
-		<mapper resource="com/example/demo/db/educationMapper.xml" />
-		<mapper resource="com/example/demo/db/lectureMapper.xml" />
-		<mapper resource="com/example/demo/db/opinionMapper.xml" />
-	<!-- 	<mapper resource="com/example/demo/db/traningRequestMapper.xml" />   -->
+		<mapper resource="com/example/demo/mapper/educationMapper.xml" />
+		<mapper resource="com/example/demo/mapper/lectureMapper.xml" />
+		<mapper resource="com/example/demo/mapper/opinionMapper.xml" />
+	<!-- 	<mapper resource="com/example/demo/mapper/traningRequestMapper.xml" />   -->
 	</mappers>
 </configuration>
