@@ -6,8 +6,10 @@
 
     <!-- 회원 테이블 조회 -->
     <select id = "getTotalUserList" resultType="usersVO">
-        select * from users
+        select * from users order by userno
     </select>
 
-
+    <delete id = "deleteUser">
+        delete from users where userno = #{userno}
+    </delete>
 </mapper>

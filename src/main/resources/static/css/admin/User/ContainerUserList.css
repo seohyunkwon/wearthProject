@@ -37,6 +37,51 @@
 
 /* 테이블 속성 */
 
+
 .table-hover tbody tr:hover {
     cursor: pointer;
+}
+
+.col-no {
+    width: 2rem;
+}
+
+.col-name {
+    width: 100px;
+}
+
+.col-id {
+    width: 100px;
+}
+
+.col-pwd {
+    width: 150px;
+}
+
+.col-birth {
+    width: 100px;
+}
+
+.col-gender {
+    width: 50px;
+}
+
+.col-nickname {
+    width: 100px;
+}
+
+.col-regdate {
+    width: 150px;
+}
+
+.col-location {
+    width: 200px;
+}
+
+.col-phone {
+    width: 150px;
+}
+
+.col-point {
+    width: 100px;
 }
