@@ -34,7 +34,6 @@
 
 }
 
-
 .side-menu-item:hover {
     background-color: var(--phoenix-link-hover-color);
     color: white; /* 필요에 따라 텍스트 색상도 변경 */
@@ -42,7 +41,7 @@
 
 .list-group-item-sub-menu {
     display: flex;
-    width: 14.375rem;
+    width: 12.375rem;
     padding: 0.125rem 2.375rem;
     align-items: center;
     gap: 1rem;
@@ -50,14 +49,8 @@
     margin-bottom: 0.2rem;
     color: var(--phoenix-900);
 }
-
-.list-group-item-sub-menu {
-    display: flex;
-    width: 14.375rem;
-    padding: 0.125rem 2.375rem;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.2rem;
-    margin-bottom: 0.2rem;
-    color: var(--phoenix-900);
+.list-group-item-sub-menu:hover {
+    cursor: pointer;
+    background-color: var(--phoenix-link-hover-color);
+    color: white;
 }

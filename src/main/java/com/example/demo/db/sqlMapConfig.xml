@@ -14,12 +14,14 @@
 		<typeAlias type="com.example.demo.vo.GoodsCategoryVO" alias="categoryVO" />
 		<typeAlias type="com.example.demo.vo.CartVO" alias="cartVO" />
 		<!-- 류예인 -->
-		<typeAlias type="com.example.demo.vo.EducationVO" alias="educationVO" />
-		<typeAlias type="com.example.demo.vo.LectureVO" alias="lectureVO" />
-		<typeAlias type="com.example.demo.vo.TrainingRequestVO" alias="trainingRequestVO" />
-		
-		<!-- 공통 -->
-		<typeAlias type="com.example.demo.vo.OpinionVO" alias="opinionVO" />
+		<typeAlias type="com.example.demo.entity.Education"
+			alias="educationVO" />
+		<typeAlias type="com.example.demo.entity.Lecture"
+			alias="lectureVO" />
+		<typeAlias type="com.example.demo.entity.Opinion"
+			alias="opinionVO" />
+		<typeAlias type="com.example.demo.entity.TraningRequest"
+			alias="traningRequestVO" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -40,12 +42,12 @@
 		<mapper resource="com/example/demo/db/goodsMapper.xml" />
 		<mapper resource="com/example/demo/db/GoodsCategoryMapper.xml" />
 		<mapper resource="com/example/demo/db/cartMapper.xml" />
-		
 		<!-- 류예인 -->
 		<mapper resource="com/example/demo/db/educationMapper.xml" />
 		<mapper resource="com/example/demo/db/lectureMapper.xml" />
 		<mapper resource="com/example/demo/db/trainingRequestMapper.xml" />
 		<!-- 공통 -->
 		<mapper resource="com/example/demo/db/opinionMapper.xml" />
+		<mapper resource="com/example/demo/db/traningRequestMapper.xml" />
 	</mappers>
 </configuration>
