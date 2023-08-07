@@ -3,15 +3,26 @@ package com.example.demo.vo;
 import java.time.LocalDate;
 import java.util.Date;
 
+import com.example.demo.security.Role;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Data
 @Entity
-@ToString
+@Builder
 @Table(name="users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsersVO {
 	@Id
 	private int userno;
@@ -27,7 +38,9 @@ public class UsersVO {
 	private String phone;
 	private int point;
 	private String u_status;
-	private String role;
+	@Enumerated(EnumType.STRING)
+	@Column(name="role")
+	private Role role;
 	public int getUserno() {
 		return userno;
 	}
@@ -106,11 +119,14 @@ public class UsersVO {
 	public void setU_status(String u_status) {
 		this.u_status = u_status;
 	}
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
+	}
+	public String getRoleKey() {
+		return role.getKey();
 	}
 	
 	
