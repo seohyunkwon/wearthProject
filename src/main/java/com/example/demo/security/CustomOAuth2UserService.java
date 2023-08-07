@@ -70,6 +70,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			newUser.setU_name(attributes.getId());
 			newUser.setPwd(new BCryptPasswordEncoder().encode(kus.makePwd()));
 			newUser.setNickname(attributes.getId());
+			newUser.setRole(Role.USER);
 			System.out.println("new USer : "+newUser);
 			ur.insert(newUser);
 
