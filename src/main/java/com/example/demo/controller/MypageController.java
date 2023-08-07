@@ -43,8 +43,8 @@ public class MypageController {
 		}
 	}
 	
-	@GetMapping("/mypage/shopping/detail/ordersno")
-	public String detail_shopping(@RequestParam(required = true) int ordersno, Model model) {
+	@GetMapping("/mypage/shopping/detail")
+	public String detail_shopping(int ordersno, Model model) {
 		List<OrdersDetailGoodsVO> list = or.findByOrdersNo(ordersno);
 		model.addAttribute("ordersdetail_list", list);
 		return "/mypage/shopping/detail";

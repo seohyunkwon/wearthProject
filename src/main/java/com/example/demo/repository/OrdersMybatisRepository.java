@@ -21,6 +21,6 @@ public class OrdersMybatisRepository {
 	}
 	// 주문 상세 목록 조회
 	public static List<OrdersDetailGoodsVO> findByOrdersNo(int ordersno) {
-		return OrdersDBManager.findByOrdersNo(ordersno);
+		return OrdersDBManager.findListOrdersDetailGoodsByOrdersNo(ordersno);
 	}
 }
