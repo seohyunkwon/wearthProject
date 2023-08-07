@@ -31,10 +31,12 @@ public class MypageController {
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		UsersVO u = (UsersVO)session.getAttribute("u");
+		System.out.println("u가잘들어오는지 shoppinglist :  " + u);
 		if(u==null) {
 			return "/userinfo/login";
 		} else {
 			int userno = u.getUserno();
+			System.out.println("shoppinglist의 userno 확인 : " + userno);
 			model.addAttribute("order_list", or.findByUserNo(userno));
 			System.out.println(or.findByUserNo(userno));
 			return "/mypage/shopping/list";

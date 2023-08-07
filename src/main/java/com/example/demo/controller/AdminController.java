@@ -27,6 +27,15 @@ public class AdminController {
         return "admin/User/UserList";
     }
 
+    //01 회원조회테이블 만들기
+    //데이터를 UserVO에서 가져와서 li로 뽑기
+    //
+
+
+
+    //02 검색기능 만들기 : 검색은 이름 나이 아이디 핸드폰번호 거주지
+
+
     //AdminList
 
     @GetMapping("/adminAdminList")
