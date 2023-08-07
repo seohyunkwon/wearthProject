@@ -41,22 +41,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.expression.Sets;
 
-import com.example.demo.repository.UserJpaRepository;
-import com.example.demo.security.UserDetailServiceImpl;
-import com.example.demo.service.KakaoLoginService;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.vo.UsersVO;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -67,9 +57,6 @@ public class UserinfoController {
 
 	@Autowired
 	private UserInfoService us;
-	
-	@Autowired
-	private KakaoLoginService kus;
 
 	@Autowired
 	private UserDetailsService uds;
@@ -95,62 +82,6 @@ public class UserinfoController {
 	public void login(@RequestParam(value="error", required = false)String error, Model model) {
 		model.addAttribute("error", error);
 	}
-
-	@GetMapping("kakao/callback")
-	public String kakao(String code) {
-		System.out.println("code : "+code);
-		String accessToken = kus.getKakaoAccessToken(code);
-		Optional<UsersVO> u = kus.getUserInfo(accessToken);
-		System.out.println("userinfo : "+ (u.isPresent()?u.get():"empty!!"));
-		return "redirect:/";
-	}
-	
-//	@PostMapping("/userinfo/kakaoLogin")
-//	public String kakaoLogin(@RequestParam("id") String id, 
-//							 @RequestParam("email") String email,
-//							 @RequestParam("gender") String gender,
-//							 @RequestParam("birthday") String birth,
-//							 HttpSession session) {
-//		Optional<UsersVO> u = us.findById(id);
-//		if (u.isPresent()) {
-//			System.out.println("이미 회원 "+u.get());
-//			try {
-//				
-//			
-//			 // 카카오 사용자 정보를 이용하여 UserDetails 객체 생성
-//	        UserDetails userDetails = uds.loadUserByUsername(id);
-//
-//	        // 인증 처리를 위해 UsernamePasswordAuthenticationToken 생성
-//	        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//
-//	        // 인증 처리
-//	        Authentication authenticatedUser = am.authenticate(authentication);
-//	        System.out.println("au : "+authenticatedUser);
-//
-//	        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-//	        // 로그인이 완료되었으므로 세션에 사용자 정보 저장
-//			session.setAttribute("u", u.get());
-//			System.out.println("실행완료 ");
-//			} catch (Exception e) {System.out.println("오류 오류 : "+e.getMessage());}
-//			return "redirect:/";
-//		} else {
-//			int month = Integer.parseInt(birth.substring(0,2));
-//			int day = Integer.parseInt(birth.substring(2));
-//			UsersVO newUser = new UsersVO();
-//			newUser.setId(id);
-//			newUser.setPwd(encoder.encode(makePwd()));
-//			newUser.setU_name(id);
-//			newUser.setDate_birth(LocalDate.of(0, month, day));
-//			newUser.setGender(gender.equals("female")?"W":"M");
-//			newUser.setEmail(email);
-//			newUser.setNickname(id);
-//			newUser.setU_status("Y");
-//			newUser.setRole("user");
-//			us.join(newUser);
-//			System.out.println("가입! "+newUser);
-//			return "redirect:/";
-//		}
-//	}
 
 	@GetMapping("userinfo/signup")
 	public void signupForm() {
