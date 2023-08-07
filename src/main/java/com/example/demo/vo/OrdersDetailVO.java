@@ -12,8 +12,10 @@ public class OrdersDetailVO {
 
 	@Id
 	private int ordersDetailNo;
+	private int userNo;
 	private int ordersNo;
 	private int goodsNo;
+	private int lecNo;
 	private int detailPrice;
 	private int detailCnt;
 }

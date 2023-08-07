@@ -24,7 +24,7 @@ public interface UserJpaRepository extends JpaRepository<UsersVO, Integer> {
 			+ "email, nickname, date_reg, residence, phone, point, score, u_status, role) "
 			+ "values (seq_usersno.nextval,:#{#u.id},:#{#u.pwd}, :#{#u.u_name}, :#{#u.date_birth}, :#{#u.gender}, "
 			+ ":#{#u.email}, :#{#u.nickname}, sysdate , :#{#u.residence}, :#{#u.phone}"
-			+ ", 0, 0,'Y', :#{#u.role})", nativeQuery = true)
+			+ ", 0, 0,'Y', 'USER')", nativeQuery = true)
 	public void insert(UsersVO u);
 	
 	// 아이디로 회원 찾기

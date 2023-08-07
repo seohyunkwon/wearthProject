@@ -1,8 +1,13 @@
 package com.example.demo.security;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,22 +21,21 @@ import lombok.Setter;
 
 @Service
 @Setter
-public class UserDetailServiceImpl implements UserDetailsService  {
-	
+public class UserDetailServiceImpl implements UserDetailsService {
+
 	@Autowired
 	private UserJpaRepository ur;
 
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-	    Optional<UsersVO> userOptional = ur.findById(id);
-	    UsersVO u = userOptional.orElse(null);
-	    if (u == null) {
-	        throw new UsernameNotFoundException(id);
-	    }
-		return User.builder()
-				.username(id)
-				.password(u.getPwd())
-				.roles(u.getRole()).build();
+		Optional<UsersVO> userOptional = ur.findById(id);
+		UsersVO u = userOptional.orElse(null);
+		if (u == null) {
+			throw new UsernameNotFoundException("존재하지 않는 회원입니다.");
+		}
+		return User.builder().username(id).password(u.getPwd()).roles(u.getRoleKey()).build();
 	}
+
+
 
 }
