@@ -17,26 +17,26 @@ import jakarta.transaction.Transactional;
 @Primary
 public interface UserJpaRepository extends JpaRepository<UsersVO, Integer> {
 
-	// 회원가입
-	@Transactional
-	@Modifying
-	@Query(value = "insert into Users b(userno, id, pwd, u_name, date_birth, gender, "
-			+ "email, nickname, date_reg, residence, phone, point, score, u_status, role) "
-			+ "values (seq_usersno.nextval,:#{#u.id},:#{#u.pwd}, :#{#u.u_name}, :#{#u.date_birth}, :#{#u.gender}, "
-			+ ":#{#u.email}, :#{#u.nickname}, sysdate , :#{#u.residence}, :#{#u.phone}"
-			+ ", 0, 0,'Y', :#{#u.role})", nativeQuery = true)
-	public void insert(UsersVO u);
-	
-	// 아이디로 회원 찾기
-	public Optional<UsersVO> findById(String id);
+   // 회원가입
+   @Transactional
+   @Modifying
+   @Query(value = "insert into Users b(userno, id, pwd, u_name, date_birth, gender, "
+         + "email, nickname, date_reg, residence, phone, point, score, u_status, role) "
+         + "values (seq_usersno.nextval,:#{#u.id},:#{#u.pwd}, :#{#u.u_name}, :#{#u.date_birth}, :#{#u.gender}, "
+         + ":#{#u.email}, :#{#u.nickname}, sysdate , :#{#u.residence}, :#{#u.phone}"
+         + ", 0, 0,'Y', 'USER')", nativeQuery = true)
+   public void insert(UsersVO u);
+   
+   // 아이디로 회원 찾기
+   public Optional<UsersVO> findById(String id);
 
-	// 닉네임으로 회원 찾기
-	public Optional<UsersVO> findByNickname(String nickname);
+   // 닉네임으로 회원 찾기
+   public Optional<UsersVO> findByNickname(String nickname);
 
-	// 이메일로 회원 찾기
-	public Optional<UsersVO> findByEmail(String email);
+   // 이메일로 회원 찾기
+   public Optional<UsersVO> findByEmail(String email);
 
-	// 전화번호로 회원 찾기
-	public Optional<UsersVO> findByPhone(String phone);
+   // 전화번호로 회원 찾기
+   public Optional<UsersVO> findByPhone(String phone);
 
 }
