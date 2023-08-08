@@ -6,6 +6,8 @@ import com.example.demo.vo.EducationVO;
 import com.example.demo.vo.UsersVO;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class AdminMyBatisRepository {
 	public static int totalPage;
 
 	public List<UsersVO> getTotalUserList() {
+		
 		return AdminDBManager.getTotalUserList();
 	}
 

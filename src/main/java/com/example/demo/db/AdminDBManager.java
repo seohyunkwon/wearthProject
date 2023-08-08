@@ -27,6 +27,7 @@ public class AdminDBManager extends DBManager {
         System.out.println();
         SqlSession session =sqlSessionFactory.openSession();
         re = session.delete("admin.deleteUser", userno);
+        session.commit();
         session.close();
         return re;
     }

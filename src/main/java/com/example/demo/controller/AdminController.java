@@ -49,6 +49,7 @@ public class AdminController {
     @ResponseBody
     public String deleteUser(@PathVariable int userno) {
         int result = adminService.deleteUser(userno);
+        System.out.println("deleteUser : "+ userno + " "+result);
         if (result > 0) {  // 삭제된 행의 수가 0보다 큰 경우
             return "success";  // 성공적으로 사용자가 삭제되면 "success" 반환
         } else {

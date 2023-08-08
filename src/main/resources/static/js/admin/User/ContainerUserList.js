@@ -28,7 +28,7 @@ function deleteUser(userId) {
             xhr.setRequestHeader(header, token); // CSRF 토큰을 헤더에 추가
         },
         success: function(response) {
-            if (response.success) {
+            if (response == 'success') {
                 location.reload(); // 테이블 새로 고침
             } else {
                 alert('회원 삭제에 실패했습니다.');
