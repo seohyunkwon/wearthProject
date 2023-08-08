@@ -25,9 +25,8 @@
 	<div class="container con">
 		<div>
           <span class="mb-6 sm-3 title">상세 주문내역&nbsp;&nbsp;</span>
-		  <span style="font-size: 20;">주문번호 : w001&nbsp;</span>
-      	  <span style="font-size: 20;">•&nbsp;&nbsp;주문일자 : 2023/07/22 14:23</span>
-          
+		  <span style="font-size: 20;" th:text="'주문번호 : '+${order.ordersNo}+' '"></span>
+      	  <span style="font-size: 20;" th:text="' • 주문일자 : '+${#dates.format(order.ordersDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
           <button class="btn custom-reverse-btn t-btn">문의</button>
           <button class="btn custom-reverse-btn t-btn">주문취소</button>
           
@@ -40,9 +39,9 @@
             <th>결제금액</th>
             <th><i class="fa-solid fa-bars" style="color: #5c5c5c;"></i></th>
           </tr>
-          <tr>
-            <td><img class="img" src="https://simplyo19.godohosting.com/images/thumbnail/dental/toothbrush_12ea_detail.jpg"></td>
-            <td>대나무 칫솔 2EA</td>
+          <tr th:each="d:${ordersdetail_list}">
+            <td><img class="img" th:src="@{/images/shop/}+${d.mainfname}"></td>
+            <td th:text="${d.goodsname}">대나무 칫솔 2EA</td>
             <td><b style="text-decoration: line-through;">3,500원</b><br>2,700원</td>
             <td><button class="btn custom-btn">후기쓰기</button></td>
           </tr>

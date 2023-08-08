@@ -12,6 +12,7 @@ import com.example.demo.repository.OrdersMybatisRepository;
 import com.example.demo.repository.UserJpaRepository;
 import com.example.demo.vo.OrdersDetailGoodsVO;
 import com.example.demo.vo.OrdersDetailVO;
+import com.example.demo.vo.OrdersVO;
 import com.example.demo.vo.UsersVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +47,9 @@ public class MypageController {
 	@GetMapping("/mypage/shopping/detail")
 	public String detail_shopping(int ordersno, Model model) {
 		List<OrdersDetailGoodsVO> list = or.findByOrdersNo(ordersno);
+		OrdersVO order = or.findOrdersByOrdersNo(ordersno);
 		model.addAttribute("ordersdetail_list", list);
+		model.addAttribute("order", order);
 		return "/mypage/shopping/detail";
 	}
 	
