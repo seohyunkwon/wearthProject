@@ -87,7 +87,7 @@
 
             <div class=table-userlist-title>
                 <div>회원관리</div>
-                <div>총 회원수 : 5400</div>
+                총 인원수: <span th:text="${totalUser} + '명'"></span>
                 <div></div>
             </div>
             <table class="table table-dark table-striped table-hover">
@@ -111,7 +111,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="user : ${userList}" >
-                    <td><input type="checkbox" th:value="${user.userno}" name="userCheckbox"/></td>      <th scope="row" th:text="${user.userno}" data-bs-toggle="modal" data-bs-target="#model-${user.userno}"></th>
+                    <td><input type="checkbox" th:value="${user.userno}" name="userCheckbox"/></td>
                     <th scope="row" th:text="${user.userno}" data-bs-toggle="modal" th:attr="data-bs-target='#model-' + ${user.userno}"></th>
                     <td th:text="${user.u_name}" data-bs-toggle="modal" th:attr="data-bs-target='#model-' + ${user.userno}"></td>
                     <td th:text="${user.id}" data-bs-toggle="modal" th:attr="data-bs-target='#model-' + ${user.userno}"></td>
@@ -128,6 +128,24 @@
         </div>
     </div>
 
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="/adminUserList/1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(1, totalPage)}">
+                <a class="page-link" th:href="@{/adminUserList/{pageNum}(pageNum=${page})}" th:text="${page}"></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="/adminUserList/${totalPage}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <!-- Modal -->
     <div th:each="user : ${userList}">
         <div class="modal fade" th:id="'model-' + ${user.userno}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="'label-' + ${user.userno}" aria-hidden="true">

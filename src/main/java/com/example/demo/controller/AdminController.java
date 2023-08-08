@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.AdminMyBatisRepository;
 import com.example.demo.service.AdminService;
 import com.example.demo.vo.UsersVO;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
+@Setter
 public class AdminController {
 
 
@@ -34,14 +38,22 @@ public class AdminController {
     // 회원관리, 운영자관리 페이지
 
     //UserList
-    @GetMapping("/adminUserList")
-    public String adminUserList(Model model){
+    @GetMapping("/adminUserList/{pageNUM}")
+    public String adminUserList(Model model, @PathVariable("pageNUM") int pageNUM){
+
+        int start = (pageNUM-1) * AdminMyBatisRepository.pageSize+1;
+        int end = start + AdminMyBatisRepository.pageSize-1;
+
         System.out.println("adminUserList의 컨트롤러 작동");
 
-        List<UsersVO> List = adminService.getTotalUserList();
-        
-        System.out.println("USERLIST 출력 : " + List);
-        model.addAttribute("userList", List);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("start", start);
+        map.put("end", end);
+
+        model.addAttribute("totalUser", adminService.getTotalUser());
+        model.addAttribute("userList", adminService.getTotalUserList(map));
+        model.addAttribute("totalPage", AdminMyBatisRepository.totalPage); // 추가된 부분
+
         return "admin/User/UserList";
     }
 
