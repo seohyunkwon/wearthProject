@@ -13,7 +13,7 @@
 	</select>
 	<!-- 주문 상세 목록 조회 -->
 	<select id="findListOrdersDetailGoods" resultType="ordersdetailgoodsVO">
-		select * from ordersdetailgoods where ordersno = #{ordersno};
+		select * from ordersdetailgoods where ordersno = #{ordersno}
 	</select>
 
 </mapper>
