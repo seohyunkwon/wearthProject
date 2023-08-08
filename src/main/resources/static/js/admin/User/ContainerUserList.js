@@ -15,9 +15,18 @@ $(document).ready(function() {
 });
 
 function deleteUser(userId) {
+
+
+    var header = $("meta[name='_csrf_header']").attr('content');
+    var token = $("meta[name='_csrf']").attr('content');
+
+
     $.ajax({
-        url: `/deleteUser/${userId}`, // 서버 엔드포인트 (실제 경로를 확인하여 수정하세요)
+        url: `/deleteUser/${userId}`,
         type: 'DELETE',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token); // CSRF 토큰을 헤더에 추가
+        },
         success: function(response) {
             if (response.success) {
                 location.reload(); // 테이블 새로 고침
