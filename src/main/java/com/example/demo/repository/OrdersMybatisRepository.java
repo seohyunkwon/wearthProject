@@ -12,15 +12,20 @@ import com.example.demo.vo.OrdersVO;
 public class OrdersMybatisRepository {
 	
 	// 주문 목록 조회
-	public static List<OrdersVO> findByUserNo(int userno) {
+	public List<OrdersVO> findByUserNo(int userno) {
 		return OrdersDBManager.findByUserNo(userno);
 	}
 	// 주문 조회
-	public static OrdersVO findOrdersByOrdersNo(int ordersno) {
+	public OrdersVO findOrdersByOrdersNo(int ordersno) {
 		return OrdersDBManager.findOrdersByOrdersNo(ordersno); 
 	}
 	// 주문 상세 목록 조회
-	public static List<OrdersDetailGoodsVO> findByOrdersNo(int ordersno) {
+	public List<OrdersDetailGoodsVO> findByOrdersNo(int ordersno) {
 		return OrdersDBManager.findListOrdersDetailGoodsByOrdersNo(ordersno);
+	}
+	
+	// 주문취소
+	public int deleteOrder(int ordersno) {
+		return OrdersDBManager.deleteOrder(ordersno);
 	}
 }

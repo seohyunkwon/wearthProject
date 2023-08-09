@@ -27,5 +27,12 @@ public class OrdersDBManager extends DBManager {
 		session.close();
 		return list;
 	}
+	
+	public static int deleteOrder(int ordersno) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.update("orders.deleteOrder", ordersno);
+		session.close();
+		return re;
+	}
 
 }
