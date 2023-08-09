@@ -85,11 +85,12 @@ public class Boardcontroller {
 	@PostMapping("/board/insert")
 	public ModelAndView insert(BoardVO b, FilesVO f, HttpServletRequest request) {
 		System.out.println("insert POST Controller---------------------------------");		
-		String path = request.getServletContext().getRealPath("/images/board");
+		String path = request.getServletContext().getRealPath("/board");
 		System.out.println("path:"+path);
 		String fname = null;
 		MultipartFile uploadFile = f.getUploadFile();
 		fname = uploadFile.getOriginalFilename();
+		System.out.println("fname: "+fname);
 		//첨부파일이 있는 경우
 		if(fname != null && !fname.equals("")) {
 			try {
@@ -97,9 +98,10 @@ public class Boardcontroller {
 				FileCopyUtils.copy(uploadFile.getBytes(), fos);
 				fos.close();
 				
-				System.out.println("파일번호 : "+fs.getNextNo());
 				f.setFileno(fs.getNextNo());	//파일 번호 부여
+				System.out.println("파일번호 : "+fs.getNextNo()); 		//여기까지 정상 작동
 				f.setBoardno(b.getBoardno());	//input hidden으로 게시글 번호 담겨있음..
+				System.out.println("f.getBoardno:"+f.getBoardno());
 				f.setFname(fname);
 				fs.insertInBoard(f);
 				System.out.println("******************파일업로드 완료*******************");
@@ -109,8 +111,6 @@ public class Boardcontroller {
 		}else {
 			fname = "";
 		}
-		
-		
 		bs.insert(b);
 		ModelAndView mav = new ModelAndView("redirect:/board/list/1");	//게시글 작성 완료시 1페이지로 이동
 		return mav;

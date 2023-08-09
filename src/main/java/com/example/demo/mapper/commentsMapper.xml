@@ -10,6 +10,7 @@
 		from comments c, users u
 		where c.userno=u.userno
 		and boardno=#{boardno}
+		order by commentno asc
 	</select>
 	
 	<select id="getTotalRecord" resultType="java.lang.Integer">

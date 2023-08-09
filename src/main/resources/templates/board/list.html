@@ -27,6 +27,8 @@
 			$(this).toggleClass("liked", isLiked);
 		});
 	});
+	
+	
 
 </script>
 <style>
@@ -123,7 +125,7 @@
 				</form>
 			</div>
 			
-			<!--최신순/인기-->
+			<!--최신순/인기순-->
 			<div class="col listOption">
 				<ul class="nav justify-content-end">
 				<li class="nav-item">
@@ -145,10 +147,12 @@
 				<div id="board_boardno" style="display: none;" th:text="${board.boardno}"></div>
 				<!--이미지가 있는 경우-->
 				<div th:if="${board.fname != null}">
-					<img class="card-img-top" th:src="@{/images/board/}+${board.fname}" alt="Card image">
+					<!--<img class="card-img-top" th:src="@{/images/board/}+${board.fname}" alt="Card image">-->
+					<img class="card-img-top" th:src="@{'/board/'+${board.fname}}" alt="Card image">
 				</div>
 				<div th:unless="${board.fname != null}">
-					<img class="card-img-top" th:src="@{/images/board/default.jpeg}" alt="Card image">
+					<img class="card-img-top" th:src="@{/board/default.jpeg}" alt="Card image">
+<!--					<img class="card-img-top" th:src="@{/images/board/default.jpeg}" alt="Card image">-->
 				</div>
 			    <div class="card-body">
 					<h4 class="card-title" th:text="${board.b_title}" id="b_title"></h4>
@@ -167,9 +171,7 @@
 						<div class="hit">조회수</div>
 					</div>
 				</div>
-
 			</div><!--게시글 한 개 끝-->
-
 		</div><!--게시글 리스트 끝-->
 		
 		
@@ -213,7 +215,7 @@
 		      <div class="modal-footer" style="padding: 0; justify-content: space-between;">
 				  <div class="modal-footer-left" style="gap:1rem;">
 					   <button type="button" class="btn custom-btn">수정</button>
-					   <button type="button" class="btn custom-btn">삭제</button>
+					   <button type="button" class="btn custom-btn" id="btnDelete">삭제</button>
 				  </div>
 				  <div class="modal-footer-right">
 					<div class="like-button">
@@ -233,9 +235,6 @@
 		<script>
 			//카드 클릭 시 게시글 상세정보 가져오기
 			$(".card").click(function(){
-				var header = $("meta[name='_csrf_header']").attr('content');
-				var token = $("meta[name='_csrf']").attr('content');
-				//var boardno = $(this).find("#board_boardno").val();
 				var boardno = $(this).find("#board_boardno").text();
 				console.log("현재 boardno:"+boardno);
 				var title = $(this).find("#b_title").text();
@@ -250,49 +249,26 @@
 		        $("#board_writer").text(writer);
 				$("#board_img").attr("src", imageUrl);
 				
-				//댓글리스트 가져오기
-				$.ajax({
-					url : "/comments/list",
-					type : "POST",
-					data : {boardno:boardno},
-					beforeSend: function(xhr) {
-						xhr.setRequestHeader(header, token);
-					},
-					success : function(data){
-						var commentArea = $(".commentArea");
-        
-			        // 기존에 있는 내용을 지우고
-			        commentArea.empty();
-			
-			        // 가져온 댓글을 순환하며 댓글 영역에 추가합니다.
-			        $.each(data, function(i, value) {
-			            var commentWriter = value.nickname;
-			            var commentContent = value.c_content;
-			
-			            // 댓글 작성자와 내용을 표시하는 요소들을 만듭니다.
-//			            var commentWriterDiv = $("<div>").addClass("commentWriter").text(commentWriter);
-			            var commentContentDiv = $("<div>").addClass("commentContent").text(commentWriter+" : "+commentContent);
-			
-			            // 댓글 영역에 댓글 요소들을 추가합니다.
-			            var commentDiv = $("<div>").addClass("comment").append(commentContentDiv);
-			
-			            commentArea.append(commentDiv);
-			        });
-						//$.each(data, function(i, value){
-						//	var result = value.userno + "," + value.c_content;
-						//	console.log(result);
-						//});
-					}, error: function(){
-						alert("실패");
-					}
-				});
 				
-			})
-			//댓글 목록 띄우는 함수
+				//댓글리스트 가져오기
+				// 기존에 있는 내용을 지우고
+			    //commentArea.empty(); -> 위치상 왜 안되는지?
+				listComment(boardno);
+				
+			})//카드 클릭 이벤트 끝
 			
+			//게시글 삭제 기능
+			$("#btnDelete").click(function(event){
+				if(confirm('정말로 삭제하시겠습니까?')==true){
+					alert("삭제하기위해 boardno 넘겨주는 ajax통신하기");
+				}else{
+					event.preventDefault();
+				}
+			});
 			
 			//댓글 입력
 			$("#btn_addComment").click(function(){
+				event.preventDefault();	//새로고침 막기
 				var header = $("meta[name='_csrf_header']").attr('content');
 				var token = $("meta[name='_csrf']").attr('content');
 				var boardno = $("#boardno").val();
@@ -312,8 +288,13 @@
 							xhr.setRequestHeader(header, token);
 						},
 						success : function(data){
+							console.log("댓글: "+c_content);
+							// 댓글 입력 성공 시 그 모달을 그대로 새로고침해서 띄워놓기 
+							// boardno를 가지고 있으니까, 그 boardno의 정보를 띄우면 될거 같음
+							$("#c_content").val("");
+							listComment(boardno);
 							console.log(data);
-						}, error: function(){
+						}, error: function(){	//	todo : 댓글을 입력하세요.
 							swal('댓글 남기기 실패','댓글의 내용을 입력해주세요.','error')
 							.then(function(){
 								//todo
@@ -324,6 +305,44 @@
 				}
 				
 			})
+			
+			//댓글 불러오는 기능 함수로 정의
+			function listComment(boardno){
+				
+				var header = $("meta[name='_csrf_header']").attr('content');
+				var token = $("meta[name='_csrf']").attr('content');
+				$.ajax({
+					url : "/comments/list",
+					type : "POST",
+					data : {boardno:boardno},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(data){
+						var commentArea = $(".commentArea");
+        
+				        // 기존에 있는 내용을 지우고
+				        commentArea.empty(); //ajax을 성공해야작동해서 그런지 속도가 느림....
+				
+				        // 상태유지한 댓글들의 값을 가져온다.
+				        $.each(data, function(i, value) {
+				            var commentWriter = value.nickname;
+				            var commentContent = value.c_content;
+				
+				            // 댓글 작성자와 내용을 표시하는 div를 만듭니다.
+				            var commentContentDiv = $("<div>").addClass("commentContent").text(commentWriter+" : "+commentContent);
+				
+				            // 댓글 영역에 댓글 요소들을 추가합니다.
+				            var commentDiv = $("<div>").addClass("comment").append(commentContentDiv);
+				
+				            commentArea.append(commentDiv);
+				        });
+					}, error: function(){
+						alert("실패");
+					}
+				});	//댓글 리스트 가져오기 끝
+			}
+
 		</script>
 		
 		
