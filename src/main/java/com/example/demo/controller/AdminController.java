@@ -69,7 +69,19 @@ public class AdminController {
         }
     }
     //02 검색기능 만들기 : 검색은 이름 나이 아이디 핸드폰번호 거주지
-
+    @DeleteMapping("/deleteSelectedUser")
+    @ResponseBody
+    public String deleteSelectedUser(@RequestBody List<Integer> checkedUserIds) {
+        try {
+            // 선택된 사용자 ID로 회원 삭제 로직 구현
+            for (int userno : checkedUserIds) {
+                adminService.deleteUser(userno);
+            }
+            return "success";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 
     //AdminList
 
