@@ -4,12 +4,15 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jmx.export.naming.SelfNaming;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -103,16 +106,39 @@ public class Boardcontroller {
 				f.setBoardno(b.getBoardno());	//input hidden으로 게시글 번호 담겨있음..
 				System.out.println("f.getBoardno:"+f.getBoardno());
 				f.setFname(fname);
+				
+				
 				fs.insertInBoard(f);
 				System.out.println("******************파일업로드 완료*******************");
 			}catch (Exception e) {
 				System.out.println("파일 업로드 예외발생:"+e.getMessage());
+				
+				
+				
 			}
 		}else {
 			fname = "";
 		}
 		bs.insert(b);
 		ModelAndView mav = new ModelAndView("redirect:/board/list/1");	//게시글 작성 완료시 1페이지로 이동
+		return mav;
+	}
+	
+	//이미지 파일도 삭제되게끔 수정 필요함
+	@GetMapping("/board/delete/{boardno}")
+	public ModelAndView delete(@PathVariable("boardno") int boardno, HttpServletRequest request) {
+		System.out.println("board delete 동작-----------------------------------------------");
+		ModelAndView mav = new ModelAndView("redirect:/board/list/1");
+		//이미지 파일이 있다면(해딩 boardno를 가지고 있는 파일이 있는지 select해야한다.)
+		//fs.findByBoardno가 null이라면, null이 아니라면
+		//String path = request.getServletContext().getRealPath("/images");
+		/*
+		 * String fname = bs.findById(no).getFname(); if(bs.deleteBoard(no, pwd) == 1) {
+		 * if(fname != null && !fname.equals("")) { File file = new
+		 * File(path+"/"+fname); file.delete(); } }
+		 */
+		bs.delete(boardno);
+		System.out.println(boardno+"번 게시글 삭제 완료 ");
 		return mav;
 	}
 	

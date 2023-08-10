@@ -39,11 +39,17 @@ public class BoardServiceImpl implements BoardService {
 	public int getNextNo() {
 		return abJPA.getNextNo();
 	}
-
+	
+	
+	//게시글 등록
 	@Override
 	public void insert(BoardVO b) {
 		abJPA.insert(b);
-		
+	}
+	//게시글 삭제
+	@Override
+	public void delete(int boardno) {
+		abJPA.delete(boardno);
 	}
 	
 

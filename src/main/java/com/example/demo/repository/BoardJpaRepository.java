@@ -22,4 +22,9 @@ public interface BoardJpaRepository extends JpaRepository<BoardVO, Integer> {
 	@Transactional
 	public void insert(BoardVO b);
 
+	@Modifying
+	@Query(value = "delete from Board b where b.boardno=?1", nativeQuery = true)
+	@Transactional
+	public void delete(int boardno);
+
 }

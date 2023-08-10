@@ -6,9 +6,9 @@
 <mapper namespace="board">
 
 	<select id="findAll" resultType="boardVO">
-		SELECT boardno, nickname, b_title, b_content, b_date, b_hit, fname
-		FROM (SELECT ROWNUM n, boardno, nickname, b_title, b_content, b_date, b_hit, fname 
-		FROM (SELECT b.boardno, nickname, b_title, b_content, b_date, b_hit, fname
+		SELECT boardno, userno, nickname, b_title, b_content, b_date, b_hit, fname
+		FROM (SELECT ROWNUM n, boardno, userno, nickname, b_title, b_content, b_date, b_hit, fname 
+		FROM (SELECT b.boardno, b.userno, nickname, b_title, b_content, b_date, b_hit, fname
 		FROM board b
 		JOIN users u ON b.userno = u.userno
 		LEFT JOIN files f ON b.boardno = f.boardno

@@ -111,7 +111,7 @@
 		
 		<!--메인상단-->
 		<div class="row upperPart">
-		<div th:text="${session.u.userno}" style="display: none;" id="loginUser"/>	<!--게시글 작성자 번호(현재로그인)-->
+		
 			<!--게시글 작성 버튼 -->	
 			<div class="col">
 				<button class="custom-btn btn_write" onclick="location.href='/board/insert'">게시글작성</button>
@@ -177,7 +177,7 @@
 		
 		
 		<!-- 상세 게시글 Modal -->
-		<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="board_title" aria-hidden="true">
+		<div class="modal" id="detailModal" tabindex="-1" aria-labelledby="board_title" aria-hidden="true">
 		  <div class="modal-dialog" style="max-width: 800px;">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -187,7 +187,6 @@
 				  </div>
 		        <div class="modal-header-2">
 		       			<p id="board_writer">board_writer</p>
-		       			 <p style="display: none;" id="board_writerNo"></p>
 				 </div>
 		      </div>
 		      <div class="modal-body">
@@ -219,8 +218,8 @@
 				<!--누를 boardno를 어떻게 알지?-->
 				<!--만약, th:value="${session.u.userno}가 boardno와 다르면 display:none하도록 하면 될 듯?-->
 				
-				  <div th:class="modal-footer-left" style="visibility:hidden; gap:1rem;" >
-
+				  <div th:text="${session.u.userno}" th:class="modal-footer-left" style="visibility:hidden; gap:1rem;" id="isWriter">
+					  <p style="display: none;" id="board_writerNo"></p>
 					   <button type="button" class="btn custom-btn" id="update">수정</button>
 					   <button type="button" class="btn custom-btn" id="btnDelete">삭제</button>
 				  </div>
@@ -242,25 +241,10 @@
 		<script>
 			
 			//카드 클릭 시 게시글 상세정보 가져오기
-			var loginUser = $("#loginUser").text();
-			console.log("접속자:"+loginUser);
+			var userno = $("#userno").val();
+			console.log("접속자:"+userno);
 			var boardno;
-			
 			$(".card").click(function(){
-				 //현재접속자와 writer를 비교하기 위해 변수 선언
-		        var writerNo = $(this).find("#writerNo").text();
-		        //현재접속자와 writer를 비교하기 위해 모달에 작성자 번호 삽입
-				$("#board_writerNo").text(writerNo);
-			
-				console.log("작성자번호:"+writerNo);
-				//session.u.userno와 writerNo가 같으면 
-				if(writerNo == loginUser){
-					alert("같음");
-					$(".modal-footer-left").css("visibility", "visible");
-				}else{
-					$(".modal-footer-left").css("visibility", "hidden");
-				}
-				
 				boardno = $(this).find("#board_boardno").text();
 				console.log("현재 boardno:"+boardno);
 		        
@@ -268,14 +252,28 @@
 		        var content = $(this).find("#b_content").text();
 		        var writer = $(this).find("#nickname").text();
 		        var imageUrl = $(this).find(".card-img-top").attr("src");
-		       
-			 	
+				
+				//세션정보는 이미 저장되어있음.
+				
 		        // 모달에 정보 넣기
 		        $("#boardno").val(boardno);
+		        $("#board_writerNo").text(writerNo);
 		        $("#board_title").text(title);
 		        $("#board_content").text(content);
 		        $("#board_writer").text(writer);
 				$("#board_img").attr("src", imageUrl);
+				
+				var board_writerNo = $("#board_writerNo").text();
+				console.log("작성자번호:"+board_writerNo);
+		
+				
+				//session.u.userno와 writerNo가 같으면 
+				if(writerNo == userno){
+					alert("같음");
+					$(".modal-footer-left").style.visibility="visible";
+				}else{
+					alert("다름 ");
+				}
 				
 				//댓글리스트 가져오기
 				// 기존에 있는 내용을 지우고

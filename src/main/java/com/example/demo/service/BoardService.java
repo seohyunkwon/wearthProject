@@ -20,9 +20,12 @@ public interface BoardService {
 
 	//실천하기 게시글 등록
 	public void insert(BoardVO b);
+
+	
 	
 	
 	//실천하기 게시글 수정
 	
 	//실천하기 게시글 삭제
+	public void delete(int boardno);
 }
