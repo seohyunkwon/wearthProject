@@ -80,8 +80,8 @@ public class ShopController {
 	}
 
 	// 결제페이지 조회
-	@GetMapping("shop/order")
-	public String order() {
-		return "shop/order";
-	}
+//	@GetMapping("shop/order")
+//	public String order() {
+//		return "shop/order";
+//	}
 }

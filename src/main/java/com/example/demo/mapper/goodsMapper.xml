@@ -32,4 +32,12 @@
 	<select id="detailGoods" resultType="goodsVO">
 		select * from goods where goodsNo=#{goodsNo}
 	</select>
+	
+	<!-- 관심상품 조회 -->
+	<select id="likedGoods" resultType="goodsVO">
+		select g.* from goods g, liked l 
+		where
+		 g.goodsno=l.goodsno and
+		 userno=#{usersno} and l.goodsno is not null order by g.goodsno
+	</select>
 </mapper>

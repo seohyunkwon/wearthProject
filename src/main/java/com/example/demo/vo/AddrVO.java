@@ -18,5 +18,5 @@ public class AddrVO {
 	private String phone;
 	private String addr;
 	private String post;
-	private Boolean isDefault;
+	private String is_Default;
 }

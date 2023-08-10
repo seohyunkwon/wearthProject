@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.repository.OrdersMybatisRepository;
+import com.example.demo.repository.AddrJpaRepository;
+import com.example.demo.repository.MypageMybatisRepository;
 import com.example.demo.repository.PaymentMybatisRepository;
 import com.example.demo.repository.ReviewMyBatisRepository;
+import com.example.demo.vo.AddrVO;
+import com.example.demo.vo.GoodsVO;
 import com.example.demo.vo.OpinionVO;
 import com.example.demo.vo.OrdersDetailGoodsVO;
 import com.example.demo.vo.OrdersVO;
@@ -21,11 +24,13 @@ import lombok.Setter;
 @Setter
 public class MyPageServiceImpl implements MyPageService {
 	@Autowired
-	private OrdersMybatisRepository ordersRepository;
+	private MypageMybatisRepository ordersRepository;
 	@Autowired
 	private PaymentMybatisRepository paymentRepository;
 	@Autowired
 	private ReviewMyBatisRepository reviewRepository;
+	@Autowired
+	private AddrJpaRepository addrRepository;
 	
 	// 회원 정보 수정
 	@Override
@@ -45,18 +50,18 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public List<OrdersVO> findOrdersByUserNo(int userno) {
+	public List<OrdersVO> findOrdersByUserno(int userno) {
 		return ordersRepository.findByUserNo(userno);
 	}
 
 	@Override
 	public OrdersVO findOrderByOrdersNo(int ordersno) {
-		return ordersRepository.findOrdersByOrdersNo(ordersno);
+		return ordersRepository.findOrderByOrdersNo(ordersno);
 	}
 
 	@Override
 	public List<OrdersDetailGoodsVO> findOrdersDetailGoodsByOrdersNo(int ordersno) {
-		return ordersRepository.findByOrdersNo(ordersno);
+		return ordersRepository.findOrdersDetailGoodsByOrdersNo(ordersno);
 	}
 
 	@Override
@@ -67,6 +72,18 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public PaymentVO findPaymentByOrdersNo(int ordersno) {
 		return paymentRepository.findByOrdersNo(ordersno);
+	}
+
+	@Override
+	public List<GoodsVO> findLikedGoodsByUserno(int usersno) {
+		List<GoodsVO> list = ordersRepository.findLikedGoodsByUserno(usersno);
+		System.out.println(list);
+		return list;
+	}
+
+	@Override
+	public List<AddrVO> findAddrByUserno(int userno) {
+		return addrRepository.findByUserNo(userno);
 	}
 
 }

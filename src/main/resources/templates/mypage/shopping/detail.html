@@ -19,12 +19,12 @@
 	<link rel="stylesheet" href="/css/styles.css">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="_csrf" th:content="${_csrf.token}">
-
 	<script src="https://kit.fontawesome.com/149396cddc.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 	<input type="hidden" th:value="${order.ordersNo}" id="ordersNo">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf">
 	<div th:include="./main/header.html"></div>
 	<div class="container con">
 		<div>
@@ -33,7 +33,7 @@
 			<span style="font-size: 20;"
 				th:text="' • 주문일자 : '+${#dates.format(order.ordersDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
 			<button class="btn custom-reverse-btn t-btn">문의</button>
-			<button class="btn custom-reverse-btn t-btn" th:onclick="deleteOrders([[${orders.ordersNo}]])">주문취소</button>
+			<button class="btn custom-reverse-btn t-btn" th:onclick="deleteOrders()">주문취소</button>
 
 		</div>
 
@@ -44,18 +44,17 @@
 				<th>결제금액</th>
 				<th><i class="fa-solid fa-bars" style="color: #5c5c5c;"></i></th>
 			</tr>
-			<tr th:each="d:${ordersdetail_list}">
+			<tr th:each="d:${detail_list}">
 				<td><img class="img" th:src="@{/images/shop/}+${d.mainfname}"
 						th:onclick="'location.href=\'' + @{/shop/detail(goodsNo=${d.goodsno})} + '\''"></td>
 				<td th:text="${d.goodsname}"
 					th:onclick="'location.href=\'' + @{/shop/detail(goodsNo=${d.goodsno})} + '\''"></td>
 				<td th:onclick="'location.href=\'' + @{/shop/detail(goodsNo=${d.goodsno})} + '\''">
-					<span style="text-decoration: line-through;" th:text="${d.goodsprice}+' 원'"></span>
+					<span style="text-decoration: line-through;" th:text="${d.goodsprice}"></span>
 					<br>
-					<b th:text="${d.detailprice}+' 원'"></b>
+					<b th:text="${d.detailprice}"></b>
 				</td>
 				<td><button class="btn custom-btn" th:onclick="writeReview([[${d.goodsno}]])">후기쓰기</button></td>
-
 			</tr>
 		</table>
 		<table class="table">
@@ -71,40 +70,43 @@
 			<tr>
 				<td th:text="${payment.payment_method}"></td>
 				<td th:text="${#dates.format(payment.payDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-				<td th:text="${order.ordersPrice}+' 원'"></td>
+				<td th:text="${order.ordersPrice}"></td>
 				<td style="font-weight: bold; color: #3a6d40;">+</td>
-				<td th:text="${order.shipPrice}+' 원'"></td>
+				<td th:text="${order.shipPrice}"></td>
 				<td style="font-weight: bold; color: #3a6d40;">=</td>
-				<td style="font-size: 20px;" th:text="${order.shipPrice}+${order.ordersPrice}+' 원'"></td>
+				<td style="font-size: 20px;" th:text="${order.ordersPrice}+${order.shipPrice}"></td>
 			</tr>
 		</table>
 
 	</div>
+
 	<!-- Modal -->
 	<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="reviewModalLabel">리뷰 작성</h1>
+					<h1 class="modal-title fs-5" id="reviewModalLabel">후기 작성하기</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form>
-						제목 : <input type="text" class="input" id="inputTitle"><br>
-						내용 : <br>
-						<textarea rows="20" cols="10" style="border-radius: 30px;" id="inputContent"></textarea>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn custom-btn" onclick="submitReview()">리뷰 작성하기</button>
+					제목 : <input type="text" class="input" id="inputTitle">
+					<br>
+					내용 : <br>
+					<textarea cols="20" rows="10" style="border-radius: 15px;" id="inputContent"></textarea>
+					<button type="button" class="btn custom-btn" onclick="submitReview()">작성</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div th:include="./main/footer.html"></div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" <<<<<<< HEAD
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -143,36 +145,35 @@
 				}
 			})
 		}
-		function deleteOrders(ordersNo) {
-			Swal.fire({
+		function deleteOrders() {
+			swal({
 				title: '주문을 취소하시겠습니까?',
-				text: '3~5 영업일 이내에 환불됩니다.',
-				icon: 'info',
+				icon: "info",
+				buttons: ["아니요", "예"],
+				dangerMode: true,
+			}).then((isConfirmed) => {
+				if (isConfirmed) {
+					let form = document.createElement('form');
+					form.method = 'post';
+					form.action = '/mypage/shopping/delete';
 
-				showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-				confirmButtonColor: '#6f96d1', // confrim 버튼 색깔 지정
-				cancelButtonColor: '#58b483', // cancel 버튼 색깔 지정
-				confirmButtonText: '확인', // confirm 버튼 텍스트 지정
-				cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+					let hiddenField = document.createElement("input");
+					hiddenField.type = "hidden";
+					hiddenField.name = "ordersno";
+					hiddenField.value = $('#ordersNo').val();
+					form.appendChild(hiddenField);
+					let csrf = document.createElement("input");
+					csrf.type = "hidden";
+					csrf.name = $('#csrf').attr('name');
+					csrf.value = $('#csrf').val();
+					form.appendChild(csrf);
 
-				reverseButtons: true, // 버튼 순서 거꾸로
-
-			}).then(result => {
-				// 만약 Promise리턴을 받으면,
-				if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-					let f = document.createElement('form');
-					f.setAttribute('method', 'post');
-					f.setAttribute('action', '/mypage/shopping/delete');
-					var hiddenField = document.createElement("input");
-					hiddenField.setAttribute("type", "hidden");
-					hiddenField.setAttribute("name", "ordersno");
-					hiddenField.setAttribute("value", $('#ordersNo').val());
-					f.appendChild(hiddenField);
-					document.body.appendChild(f);
-					f.submit();
+					document.body.appendChild(form);
+					form.submit();
 				}
 			});
 		}
+
 	</script>
 </body>
 

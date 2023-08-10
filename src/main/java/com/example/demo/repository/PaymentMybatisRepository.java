@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.db.OrdersDBManager;
+import com.example.demo.db.MypageDBManager;
 import com.example.demo.db.PaymentDBManager;
 import com.example.demo.vo.OrdersDetailGoodsVO;
 import com.example.demo.vo.OrdersDetailVO;
