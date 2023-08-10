@@ -81,7 +81,7 @@
 									value="option2">
 								<label class="form-check-label" for="ship2">새로운 배송지</label>
 							</div>
-							<button class="custom-btn btn">주소록 보기</button>
+							<button class="custom-btn btn" id = "addr-btn">주소록 보기</button>
 						</td>
 
 					</tr>
@@ -155,16 +155,17 @@
 					<tr>
 						<td scope="col">쿠폰 할인</td>
 						<td>
-							<button class="custom-btn btn"
-							data-bs-toggle="modal" data-bs-target="#modal-coupon">쿠폰 적용</button>
+							<button class="custom-btn btn" data-bs-toggle="modal" data-bs-target="#modal-coupon">쿠폰
+								적용</button>
 						</td>
 					</tr>
 					<tr>
 						<td scope="col">적립금</td>
 						<td>
-							<input type="text" id="point" style="width: 90px;"> 원(총 사용 가능 적립금 : <span
-								style="color: red;">0</span>원)
+							<input type="number" id="inputPoint" style="width: 90px;" th:text="${session.u.point}"
+								max="3000"> 원
 							<br>
+							<input type="hidden" id="point" th:value="${session.u.point}">
 							<ul class="info">
 								<li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
 								<li id="mileage_max_unlimit" class="displaynone">최대 사용금액은 제한이 없습니다.</li>
@@ -240,9 +241,11 @@
 
 						<div class="mb-3">
 							<select id="selectCoupon">
-								<option selected>==쿠폰 선택==</option>
-								<option>20% 생일 축하 쿠폰</option>
-								<option>10% Welcome 쿠폰</option>
+								<option selected value="0">==쿠폰 선택==</option>
+								<option th:each="c:${coupon_list}" 
+								th:text="'['+${c.couponDisCount}+'%] '+${c.couponName}+' ('+${c.couponCnt}+' 장)'"
+								th:value="${c.couponDisCount}">
+								</option>
 							</select>
 						</div>
 						<div class="mb-3">
@@ -294,6 +297,19 @@
 				}).open();
 
 			}
+			document.getElementById('inputPoint').addEventListener('keyup', function () {
+				var inputPointValue = parseFloat(document.getElementById('inputPoint').value);
+				var pointValue = parseFloat(document.getElementById('point').value);
+
+				if (!isNaN(inputPointValue) && !isNaN(pointValue)) {
+					if (inputPointValue > pointValue) {
+						document.getElementById('inputPoint').value = pointValue;
+					}
+				}
+			});
+			document.getElementById('addr-btn').addEventListener("click", function () {
+				window.open("/shop/addr", "주소록", "width=500, height=400, left=50%, top=50%");
+			});
 
 		</script>
 </body>

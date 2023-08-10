@@ -126,26 +126,7 @@
         <div class="row mb-1 position-relative">
           <label for="inputEmail" class="form-label text-start">이메일</label>
           <div class="input-group col">
-            <input type="text" class="form-control input" id="inputEmail" name="email" th:value="${session.u.email}" required>
-            <span style="padding: 5px;">&nbsp;@&nbsp;</span>
-            <select class="form-select input">
-              <option selected>이메일 선택</option>
-              <option value="naver.com">naver.com</option>
-              <option value="kakao.com">kakao.com</option>
-              <option value="google.com">google.com</option>
-            </select>
-            <button class="btn id-check-btn custom-btn" onclick="email_check()">인증하기</button>
-            <div class="invalid-tooltip">이메일을 입력해주세요.</div>
-          </div>
-        </div>
-        
-         <!--email check input-->
-        <div class="row mb-1 position-relative" id="divEmailCheck" style="display: none;">
-          <label for="inputEmailCheck" class="form-label text-start">인증번호</label>
-          <div class="input-group col">
-            <input type="text" class="form-control input" id="inputEmailCheck" disabled>
-            <button class="btn id-check-btn custom-btn">확인</button>
-            <div class="invalid-tooltip">인증번호를 입력해주세요.</div>
+            <input type="text" class="form-control input" id="inputEmail" name="email" th:value="${session.u.email}" disabled>
           </div>
         </div>
 	
@@ -153,8 +134,7 @@
         <div class="row mb-3 position-relative">
           <label for="inputBirth" class="form-label text-start">생년월일</label>
           <div class="input-group col">
-            <input type="date" class="form-control input" id="inputBirth" name="date_birth" th:value="${session.u.date_birth}" required>
-            <div class="invalid-tooltip">생년월일을 선택해주세요.</div>
+            <input type="date" class="form-control input" id="inputBirth" name="date_birth" th:value="${session.u.date_birth}" disabled>
           </div>
         </div>
         
@@ -170,7 +150,7 @@
 
         <!--회원가입 버튼-->
         <div class="mb-3 justify-content-center">
-          <button class="btn submit-btn custom-btn" type="submit" id="btn-login">회원가입</button>
+          <button class="btn submit-btn custom-btn" type="submit" id="btn-login">회원정보수정</button>
         </div>
         
       </form>
