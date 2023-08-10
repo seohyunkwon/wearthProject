@@ -13,6 +13,31 @@ $(document).ready(function() {
         updateDeleteButton(); // 삭제 버튼 상태 업데이트
     });
 
+
+    $('#checkIdButton').click(function() {
+        var userId = $('#inputId').val();
+        if (userId.trim() === '') {
+            alert('아이디를 입력해주세요.');
+            return;
+        }
+
+        $.ajax({
+            url: '/checkId', // 실제 URL에 맞게 변경 필요
+            type: 'POST',
+            data: { id: userId },
+            success: function(response) {
+                if (response === "success") {
+                    alert('중복된 아이디입니다');
+                } else {
+                    alert('사용가능한 아이디입니다');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX 요청 중 에러 발생:', error);
+            }
+        });
+    });
+
     /* 회원정보 삭제기능 */
     $(".btn-primary-delete").on('click', function() {
         console.log('회원정보 삭제기능 동작');

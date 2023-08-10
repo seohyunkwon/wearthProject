@@ -148,13 +148,77 @@
         </nav>
 
         <!-- 모달 창 열리고 거기서 추가할 수 있는 기능 -->
-        <button> 추 가 </button>
+        <button class="btn btn-primary-insert-user" data-bs-toggle="modal" data-bs-target="#insertModal">추 가</button>
 
 
         <!-- 체크박스에 표시되어 있는 계정을 삭제함 -->
         <button class = "btn btn-primary-delete-user" disabled > 삭 제 </button>
         <!-- Insert Modal -->
-
+    <div class="modal fade" id="insertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">새 사용자 추가</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 입력 폼 -->
+                    <form id="insertForm">
+                        <div class="form-group">
+                            <label for="inputName">이름</label>
+                            <input type="text" class="form-control" id="inputName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputId">아이디</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputId" name="id" required>
+                                <button type="button" class="btn btn-secondary" id="checkIdButton">중복 확인</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPwd">비밀번호</label>
+                            <input type="password" class="form-control" id="inputPwd" name="pwd" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDateOfBirth">생년월일</label>
+                            <input type="date" class="form-control" id="inputDateOfBirth" name="dateOfBirth" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputGender">성별</label>
+                            <select class="form-select" id="inputGender" name="gender" required>
+                                <option value="남">남</option>
+                                <option value="여">여</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNickname">닉네임</label>
+                            <input type="text" class="form-control" id="inputNickname" name="nickname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCreationDate">생성일자</label>
+                            <input type="date" class="form-control" id="inputCreationDate" name="creationDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputResidence">거주지</label>
+                            <input type="text" class="form-control" id="inputResidence" name="residence" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPhoneNumber">핸드폰번호</label>
+                            <input type="tel" class="form-control" id="inputPhoneNumber" name="phoneNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPoint">포인트</label>
+                            <input type="number" class="form-control" id="inputPoint" name="point" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="saveButton">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Detail Modal -->
         <div th:each="user : ${userList}">

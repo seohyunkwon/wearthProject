@@ -1,5 +1,6 @@
 package com.example.demo.db;
 
+import com.example.demo.vo.LectureVO;
 import com.example.demo.vo.OrdersDetailGoodsVO;
 import com.example.demo.vo.OrdersVO;
 import com.example.demo.vo.UsersVO;
@@ -26,6 +27,30 @@ public class AdminDBManager extends DBManager {
         n = session.selectOne("admin.getTotalUser");
         System.out.println("AdminDBMANGER 활성화 : getTotalUser : " + n);
         return n;
+    }
+
+    public static int checkId(String userId){
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.selectOne("admin.checkId", userId);
+        return re;
+    }
+
+    public static int insertLecture (LectureVO l) {
+        int re = -1;
+        SqlSession session=sqlSessionFactory.openSession();
+        re = session.insert("lecture.insertLecture", l);
+        session.commit();
+        session.close();
+        return re;
+    }
+    public static int InsertUser(UsersVO u){
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.insert("admin.insertUser", u);
+        session.commit();
+        session.close();
+        return re;
     }
 
     public static int deleteUser(int userno){

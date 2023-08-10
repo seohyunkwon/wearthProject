@@ -24,8 +24,12 @@ public class DBManager {
 	static {
 		try {
 			String resource = "com/example/demo/mapper/sqlMapConfig.xml";
+
 			InputStream inputStream = Resources.getResourceAsStream(resource);
+
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+			inputStream.close();
 		} catch (Exception e) {
 			System.out.println("예외발생 DBManager :"+e.getMessage());
 		}

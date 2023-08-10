@@ -18,6 +18,11 @@
 
     </select>
 
+    <insert id="insertUser" parameterType= "usersVO">
+        INSERT INTO users (userno, id, pwd, u_name, date_birth, gender, email, nickname, date_reg, residence, phone, point, u_status)
+        VALUES (#{userno}, #{id}, #{pwd}, #{u_name}, #{date_birth}, #{gender}, #{email}, #{nickname}, #{date_reg}, #{residence}, #{phone}, #{point}, #{u_status})
+    </insert>
+
     <!-- 회원삭제 -->
     <delete id = "deleteUser">
         delete from users where userno = #{userno}
