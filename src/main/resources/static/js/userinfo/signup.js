@@ -142,7 +142,7 @@ function checkNickname() {
 		});
 	}
 };
-
+var authCode;
 //이메일 중복확인
 function checkEmail() {
 	var email = document.getElementById('inputEmail').value + '@' + document.getElementById('inputEmailUrl').value;
@@ -161,8 +161,9 @@ function checkEmail() {
 						url: "/userinfo/isVaildEmail",
 						data: { email: email },
 						method: "get",
-						success: function(msg) {
-							swal(msg, '인증번호를 입력해주세요.', 'info');
+						success: function(code) {
+							authCode = code;
+							swal('이메일 전송 완료', '인증번호를 입력해주세요.', 'info');
 						}
 					})
 				} else {
@@ -170,31 +171,18 @@ function checkEmail() {
 				}
 			}
 		})
-	}
-
-
 };
+
 //이메일 인증
 function checkEmailCheck() {
-	var code = document.getElementById('inputEmailCheck').value;
-	var header = $("meta[name='_csrf_header']").attr('content');
-	var token = $("meta[name='_csrf']").attr('content');
-	$.ajax({
-		url: "/userinfo/isVaildEmail",
-		data: { code: code },
-		beforeSend: function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		method: "post",
-		success: function(msg) {
-			if (msg == 'T') {
-				swal('이메일 인증 완료', "인증이 완료되었습니다.", 'success');
-				isVaildEmail = true;
-			} else {
-				swal('이메일 인증 오류', "인증번호가 올바르지 않습니다. 다시 인증해주세요.", 'warning');
-			}
-		}
-	});
+	var inputCode = document.getElementById('inputEmailCheck').value;
+	if (authCode == inputCode) {
+		swal('이메일 인증 완료', '인증이 완료되었습니다.', 'success');
+		isVaildEmail = true;
+	} else {
+		swal('이메일 인증 실패', '코드를 다시 확인해주세요.', 'warning');
+		isVaildEmail = false;
+	}
 };
 
 // 회원가입 버튼 눌렀을때
@@ -203,7 +191,7 @@ function submitForm() {
 	document.getElementById("finalPhone").value =
 		document.getElementById('inputPhone1').value + document.getElementById('inputPhone2').value + document.getElementById('inputPhone3').value;
 	document.getElementById("finalEmail").value =
-		document.getElementById('inputEmail').value + document.getElementById('inputEmailUrl').value;
+		document.getElementById('inputEmail').value +'@'+document.getElementById('inputEmailUrl').value;
 	// 변수들의 값을 확인하여 모두 true인 경우에만 폼을 전송
 	if (document.getElementById('inputResidence').value == "" || document.getElementById('inputResidence').value == null) {
 		swal('회원가입 실패', '주소를 입력해주세요.', 'warning');
@@ -227,30 +215,6 @@ function submitForm() {
 
 };
 
-
-//카카오로그인
-Kakao.init("805b5d2e52d8f6303fb372ca5efd7e30");
-function kakaoLogin() {
-	Kakao.Auth.loginForm({
-		scope: "account_email, gender, birthday, profile_image",
-		success: function() {
-			Kakao.API.request({
-				url: "/v2/user/me",
-			}).then(function(data) {
-				var userInfo = {
-					email: data.kakao_account.email,
-					birthday: data.kakao_account.birthday,
-					gender: data.kakao_account.gender,
-					image: data.kakao_account.profile.profile_image_url
-				}
-
-				location.href = "";
-			}).catch(function(error) {
-				console.log(error);
-			})
-		}
-	});
-}
 
 // 주소 검색 api
 function searchResidence() {

@@ -51,29 +51,14 @@
             <th>결제금액</th>
             <th>상태</th>
           </tr>
-          <tr>
-            <td><a href="/mypage/shopping/detail">w001</a></td>
-            <td>23/07/22</td>
+          <tr th:each="o:${order_list}">
+            <td th:text="${o.ordersNo}"><a  th:href="@{/mypage/shopping/detail/(ordersNo=${o.ordersNo})}"></a></td>
+            <td th:text="${o.ordersDate}"></td>
             <td>대나무 칫솔 외 1개</td>
-            <td>12,200원</td>
-            <td>배송중</td>
-          </tr>
-          <tr>
-            <td>w002</td>
-            <td>23/07/23</td>
-            <td>설거지 바 외 2개</td>
-            <td>34,800원</td>
-            <td>배송 준비중</td>
-          </tr>
-          <tr>
-            <td>w003</td>
-            <td>23/07/23</td>
-            <td>고체 치약 외 3개</td>
-            <td>54,800원</td>
-            <td>결제 대기중</td>
+            <td th:text="${o.ordersPrice}"></td>
+            <td th:text="${o.ordersStatus}"></td>
           </tr>
           
-
       </table>
         <nav aria-label="Page navigation example" class="justify-content-center" style="display: flex;">
           <ul class="pagination">

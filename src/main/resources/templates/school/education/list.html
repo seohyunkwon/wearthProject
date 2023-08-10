@@ -9,19 +9,26 @@
 <link rel="stylesheet" href="/css/styles.css">
 <link rel="stylesheet" href="/css/main/style.css">
 <link rel="stylesheet" href="/css/education/education.css">
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="/js/education/education.js"></script> 
+<script src="/js/education/detail.js"></script>  
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 <body>
 <div class="container">
   <div th:include="/main/header.html"></div>
   
+  		<div th:if="${session.u}">
+  			<span id="userno" th:text="${session.u.u_name}+'('+${session.u.userno}+')님이 로그인하였습니다.'"></span>
+  		</div>
+  		
  		<!--상단배너-->
 		<div class="container p-5 my-5 border">
 		  <h1 style="font-weight: bold; color: #43a06f;">찾아가는 환경교육</h1>
 		  <p>위얼스학교의 특별한 환경교육 강의입니다.</p>
 		</div>
-
-	    
+		
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 		  <div class="container-fluid">
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,11 +71,11 @@
 	                <div class="col">
 	                    <a th:href="@{'/school/education/detail/'+${e.eduNO}}" class="btn custom-btn btn-sm" th:text="${e.eduStatus}"></a>
 	                </div>
-	                <div class="col">
-	                    <a th:onclick="'changeImage(' + ${e.eduNO} + ')'"  style="margin-left: 55px;">
-	                        <img th:id="${e.eduNO}" src="/images/education/whiteHeart.jpg" style="width:28px" />
-	                    </a>
-	                </div>
+	                <div class="col" th:if="${session.u}" sec:authorize="isAuthenticated()">
+					    <a th:onclick="'likeOrUnlike(\'' + ${e.eduNO} + '\'); return false;'" style="margin-left: 55px;">
+					        <img th:id="${e.eduNO}" th:src="${e.liked ? '/images/education/redHeart.jpg' : '/images/education/whiteHeart.jpg'}" style="width:28px" />
+					    </a>
+					</div>
 	            </div>
 	        </div>
 	    </div>
@@ -98,9 +105,5 @@
 		
 		<div th:include="/main/footer.html"></div>
 	</div>
-	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- 	 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
- 	 <script src="/js/education/education.js"></script> 
-  	 <script src="/js/education/detail.js"></script>  
 </body>
 </html>

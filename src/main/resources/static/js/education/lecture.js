@@ -1,5 +1,5 @@
 
-	//오늘 날짜 및 요일 구하기
+//오늘 날짜 및 요일 구하기
 	
   var today = new Date(); //오늘 날짜
 
@@ -20,8 +20,6 @@
 
         return todayLabel;
     }
-	
-	
 		
 // 원하는 날짜 영역에 내용 추가하기
 function addContentToDay(lecNO, lecDate, lecName) {
@@ -108,7 +106,6 @@ function addContentToDay(lecNO, lecDate, lecName) {
 			cell = row.insertCell();
 			
 		}
-		
 
 		// 달력 출력
 	    for (i = 1; i <= lastDate.getDate(); i++) // 1일부터 마지막 일까지
@@ -168,15 +165,6 @@ function addContentToDay(lecNO, lecDate, lecName) {
 				}
 			}
 		}
-			
-		
-		/*
-		addContentToDay("2023-08-02", "8월 2일 토요일 내용이다."); // 2023년 8월 5일에 내용 추가
-		addContentToDay("2023-08-06", "8월 6일 일요일 내용이다."); // 2023년 8월 6일에 내용 추가
-   		addContentToDay("2023-08-10", "8월 10일 내용이다."); // 2023년 8월 10일에 내용 추가
-   		addContentToDay("2023-08-15", "8월 15일 내용이다."); // 2023년 8월 15일에 내용 추가
-   		addContentToDay("2023-08-18", "8월 18일 내용이다."); // 2023년 8월 18일에 내용 추가
-   		*/
    		
    		var arr = $(".lec");
    		$.each(arr, function(){
@@ -187,4 +175,3 @@ function addContentToDay(lecNO, lecDate, lecName) {
 		   } )
 	}
 autoReload();
-	
