@@ -39,16 +39,25 @@ public class AdminController {
 
     //UserList
     @GetMapping("/adminUserList/{pageNUM}")
-    public String adminUserList(Model model, @PathVariable("pageNUM") int pageNUM){
+    public String adminUserList(Model model, @PathVariable("pageNUM") int pageNUM,
+                                @RequestParam(required = false) String name,
+                                @RequestParam(required = false) String id,
+                                @RequestParam(required = false) Integer age,
+                                @RequestParam(required = false) String phoneNumber){
 
         int start = (pageNUM-1) * AdminMyBatisRepository.pageSize+1;
         int end = start + AdminMyBatisRepository.pageSize-1;
 
+         //검색기능이 활성화돼서 RequestParam값이 넘어올때
+
+
+        //이건 검색 기능 활성화 안되었을 때
         System.out.println("adminUserList의 컨트롤러 작동");
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("end", end);
+
 
         model.addAttribute("totalUser", adminService.getTotalUser());
         model.addAttribute("userList", adminService.getTotalUserList(map));
@@ -56,6 +65,24 @@ public class AdminController {
 
         return "admin/User/UserList";
     }
+
+    @PostMapping("/checkId")
+    public String checkId(@PathVariable String userId){
+        int result = adminService.checkId(userId);
+
+        System.out.println("CheckId 중복확인 1이면 중복아이디 있음" + result);
+        if(result == 1){
+            return "success";
+        }
+        else return "error";
+
+    }
+
+    @PostMapping("/InsertId")
+    public String InsertUser(){
+        return "1";
+    }
+
 
     @DeleteMapping("/deleteUser/{userno}")
     @ResponseBody

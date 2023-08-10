@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.repository.AdminMyBatisRepository;
 import com.example.demo.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,6 +21,13 @@ public class AdminService {
         return repository.getTotalUser();
     }
 
+    public int checkId(String userId){
+        return repository.checkId(userId);
+    }
+
+    public int insertUser(UsersVO u){
+        return repository.InsertUser(u);
+    }
     public int deleteUser(int userno) {
         return repository.deleteUser(userno);
     }
