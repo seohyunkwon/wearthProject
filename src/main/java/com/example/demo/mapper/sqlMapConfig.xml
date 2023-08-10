@@ -10,6 +10,7 @@
 		<!-- 우종호 -->
 		<typeAlias type="com.example.demo.vo.UsersVO" alias="usersVO"/>
 		<!-- 권서현 -->
+		<typeAlias type="com.example.demo.vo.PaymentVO" alias="paymentVO" />
 		<typeAlias type="com.example.demo.vo.OrdersVO" alias="ordersVO" />
 		<typeAlias type="com.example.demo.vo.OrdersDetailVO" alias="ordersdetailVO" />
 		<typeAlias type="com.example.demo.vo.OrdersDetailGoodsVO" alias="ordersdetailgoodsVO" />
@@ -48,6 +49,8 @@
 		<mapper resource="com/example/demo/mapper/adminMapper.xml"/>
 		<!-- 권서현 -->
 		<mapper resource="com/example/demo/mapper/ordersMapper.xml" />
+		<mapper resource="com/example/demo/mapper/paymentMapper.xml" />
+		<mapper resource="com/example/demo/mapper/reviewMapper.xml" />
 		<!-- 박지영 -->
 		<mapper resource="com/example/demo/mapper/goodsMapper.xml" />
 		<mapper resource="com/example/demo/mapper/GoodsCategoryMapper.xml" />

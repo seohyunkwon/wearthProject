@@ -15,5 +15,9 @@
 	<select id="findListOrdersDetailGoods" resultType="ordersdetailgoodsVO">
 		select * from ordersdetailgoods where ordersno = #{ordersno}
 	</select>
+	<!-- 주문취소 -->
+	<update id="deleteOrder" parameterType="java.lang.Integer">
+		update orders set ordersstatus = '주문취소' where ordersno = #{ordersno}
+	</update>
 
 </mapper>

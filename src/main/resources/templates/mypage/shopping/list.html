@@ -52,7 +52,8 @@
             <th>상태</th>
           </tr>
           
-          <tr th:each="o:${order_list}"  th:onclick="'location.href=\'' + @{/mypage/shopping/detail(ordersno=${o.ordersNo})} + '\''">
+          <tr th:each="o:${order_list}"  
+          th:onclick="'location.href=\'' + @{/mypage/shopping/detail(ordersno=${o.ordersNo})} + '\''">
             <td th:text="${o.ordersNo}"></td>
             <td th:text="${#dates.format(o.ordersDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td>대나무 칫솔 외 1개</td>
