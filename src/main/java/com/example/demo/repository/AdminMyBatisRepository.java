@@ -30,16 +30,7 @@ public class AdminMyBatisRepository {
 		return AdminDBManager.getTotalUser();
 	}
 
-	public int checkId(String userId){
-		return AdminDBManager.checkId(userId);
-	}
-
-	public int InsertUser(UsersVO u){
-		return AdminDBManager.InsertUser(u);
-	}
 	public int deleteUser(int userno){
 		return AdminDBManager.deleteUser(userno);
 	}
-
-
 }
