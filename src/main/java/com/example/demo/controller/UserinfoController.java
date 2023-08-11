@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.mail.internet.MimeMessage;
@@ -45,7 +46,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.security.KakaoLoginService;
 import com.example.demo.service.UserInfoService;
+import com.example.demo.utils.CustomMailSender;
 import com.example.demo.vo.UsersVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -66,9 +69,9 @@ public class UserinfoController {
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-
+	
 	@Autowired
-	private JavaMailSender mailSender;
+	private KakaoLoginService kus;
 
 	@PostMapping("userinfo/signup")
 	public String signup(UsersVO u) {
@@ -140,22 +143,13 @@ public class UserinfoController {
 	@GetMapping("userinfo/isVaildEmail")
 	@ResponseBody
 	public String code(String email, HttpSession session) {
-		String code = sendEmail(email);
+		HashMap<String, String> mail = CustomMailSender.makeCode();
+		String code = mail.get("code");
+		CustomMailSender.sendEmail(email, mail.get("subject"), mail.get("text"));
 		session.setAttribute("code", code);
 		session.setMaxInactiveInterval(180);
-		return "인증번호를 발송했습니다.";
+		return code;
 
-	}
-
-	@PostMapping("userinfo/isVaildEmail")
-	@ResponseBody
-	public String isVaildEmail(String code, HttpSession session) {
-		String trueCode = session.getAttribute("code").toString();
-		if (trueCode.equals(code)) {
-			return "T";
-		} else {
-			return "F";
-		}
 	}
 
 	@PostMapping("userinfo/findIdByEmail")
@@ -171,33 +165,17 @@ public class UserinfoController {
 		Optional<UsersVO> u = us.findByPhone(phone);
 		return u.isPresent() ? u.get().getId() : null;
 	}
-
-	private String sendEmail(String email) {
-		SecureRandom r = new SecureRandom();
-		String code = r.nextInt(9000) + 1000 + "";
-		String subject = "[Wearth] 이메일 인증코드입니다.";
-		String text = "<h2>[Wearth] 회원가입을 위한 인증코드입니다.</h2>" + "<hr>" + "<h3>인증코드 : " + code + "</h3>";
-		try {
-			MimeMessage mimeMessage = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-			helper.setFrom("wearth2023@gmail.com");
-			helper.setTo(email);
-			helper.setSubject(subject);
-			helper.setText(text, true);
-			mailSender.send(mimeMessage);
-		} catch (Exception e) {
-			System.out.println("userinfo/isVaildEmail 예외발생: " + e.getMessage());
-		}
-		return code;
+	
+	@PostMapping("userinfo/sendEmailCode")
+	@ResponseBody
+	public String findPwdByEmail(String email) {	
+		Optional<UsersVO> u = us.findByEmail(email);
+		if(!u.isPresent()) return null;
+		return null;
 	}
 
-	private String makePwd() {
-	    StringBuilder pwd = new StringBuilder();
-	    SecureRandom r = new SecureRandom();
-	    pwd.append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9))
-	            .append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A'));
-	    return pwd.toString();
-	}
+
+
 
 	
 }

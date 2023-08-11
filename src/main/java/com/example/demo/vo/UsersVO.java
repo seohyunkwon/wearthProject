@@ -1,5 +1,6 @@
 package com.example.demo.vo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Entity
@@ -41,6 +43,7 @@ public class UsersVO {
 	@Enumerated(EnumType.STRING)
 	@Column(name="role")
 	private Role role;
+
 	public int getUserno() {
 		return userno;
 	}
@@ -122,12 +125,12 @@ public class UsersVO {
 	public Role getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
 	public String getRoleKey() {
 		return role.getKey();
 	}
-	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	
 }

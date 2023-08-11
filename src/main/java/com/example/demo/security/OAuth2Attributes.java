@@ -90,4 +90,6 @@ public class OAuth2Attributes {
 				.build();
 			
 	}
+
 }
+

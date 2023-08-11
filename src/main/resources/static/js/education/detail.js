@@ -1,8 +1,8 @@
 
-// 그룹 버튼 누를 때 이벤트 작동
+// 버튼그룹 버튼 누를 때 이벤트 작동
 function showContent(contentNumber) {
     // 모든 content 클래스 요소를 선택합니다.
-    const contents = document.querySelectorAll('.content');
+    var contents = document.querySelectorAll('.content');
 
     // 선택한 contentNumber에 해당하는 요소만 보이도록 스타일을 변경합니다.
     for (let i = 0; i < contents.length; i++) {
@@ -15,31 +15,69 @@ function showContent(contentNumber) {
 }
 
 
-// 댓글 등록 버튼 누를 때 이벤트 작동
-const btnReply = document.getElementById("btnReply");
-const commentsContainer = document.querySelector(".comments");
+$(function() {
 
-btnReply.addEventListener("click", function() {
-	
-	event.preventDefault(); // 폼 전송 기본 동작 막기 <db 연동 전,, 임시>
-	
-  const contentInput = document.getElementById("content").value;
-  if (contentInput.trim() !== "") {
-    addComment(contentInput);
-    document.getElementById("content").value = "";
-  }
+    var header = $("meta[name='_csrf_header']").attr('content');
+	var token = $("meta[name='_csrf']").attr('content');
+    var eduNO = $("#eduNO").val();
+	// 초기화 시에 서버에서 댓글 목록을 가져와 화면에 표시
+	 loadComments(eduNO);
+	 
+	$("#btnReply").on("click", function(event) {
+    event.preventDefault();
+    
+    var commentText = $("#content").val().trim(); // 변경된 부분
+    
+    if (commentText !== "") {
+        $.ajax({
+            url: "/school/education/review/insert",
+            type: "post",
+            data: { eduNO: eduNO, opinionContent: commentText },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(result) {
+                if (result === 1) {
+                    $("#content").val(""); 
+                    // 댓글 등록 후 화면 갱신을 하지 않고 새로운 댓글만 추가
+                    loadComments(eduNO); 
+                } else {
+                    swal('', '댓글 등록에 실패하였습니다.', 'error');
+                }
+            },
+            error: function() {
+                swal('', '댓글 등록 중 오류가 발생하였습니다.', 'error');
+            }
+        });
+    }
 });
 
-function addComment(content) {
-  const currentDate = new Date().toLocaleString();
-  const comment = document.createElement("div");
-  comment.classList.add("comment");
-  comment.innerHTML = `
-    <p>${content}</p>
-    <p class="date">${currentDate}</p>
-  `;
-  commentsContainer.appendChild(comment);
-}
+  // 댓글 목록을 가져와 화면에 표시하는 함수
+	function loadComments(eduNO) {
+	console.log("loadComment eduNO : " + eduNO)
+    $.ajax({
+        url: `/school/education/review/list/`+eduNO, // 위에서 작성한 컨트롤러 경로
+        success: function(comments) {
+				$("#comments").empty();
+            $.each(comments, function(){
+				var div2 = $("<div></div>").addClass("card").css("width","95%");
+				var div = $("<div></div>").addClass("card-body");
+				var h4 = $("<h4></h4>").html(this.ID).css("font-weight","bold");
+				var p = $("<p></p>").html(this.OPINIONCONTENT);
+				var p2 = $("<p></p>").html(this.OPINIONDATE);
+				$(div).append(h4,p,p2);
+				$(div2).append(div);
+				 $("#comments").append(div2);
+			})
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+	} 
+	 
+	});
+
 
 // 문의 비밀번호 작성 확인 완료 시 게시글 조회
        function checkPassword(postId) {

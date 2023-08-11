@@ -23,5 +23,7 @@ public class OrdersVO {
 	private String ordersStatus;
 	private String ordersContent;
 	private int ordersCnt;
+
 	private int shipPrice;
+
 }

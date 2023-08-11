@@ -16,9 +16,10 @@ public class OpinionVO {
 	
 	@Id
 	private int opinionNO;
-	private int eduNo;
+	private int eduNO;
 	private int goodsNo;
 	private int lecNo;
+
 	private String ID;
 	private String opinionName;
 	private String opinionContent;
@@ -26,7 +27,8 @@ public class OpinionVO {
 	private boolean opinionSecret;
 	private String opinionPwd;
 	private String opinionStatus;
-	private int opinionScore;
+	private int reviewScore;
 	private int answerNo;
 	private String type;
 }
+

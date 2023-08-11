@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="opinion">
   <select id="findAllOpinion" resultType="opinionVO">
-   select opinionNO, eduNo, goodsNo, userNo, ID, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, opinionScore, answerNo from (select rownum n, opinionNO, eduNo, goodsNo, userNo, ID, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, opinionScore, answerNo from (select * from opinion order by opinionNO desc))a where a.n between #{start} and #{end}
+   select opinionNO, eduNo, goodsNo, lecNO, ID, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, opinionScore, answerNo, type from (select rownum n, opinionNO, eduNo, goodsNo,lecNO, ID, opinionName, opinionContent, opinionDate, opinionSecret, opinionPwd, opinionStatus, opinionScore, answerNo, type from (select * from opinion order by opinionNO desc))a where a.n between #{start} and #{end}
   </select>
  
  	<select id="findByNoOpinion" resultType="opinionVO">
@@ -26,4 +26,5 @@
  	<delete id="deleteOpinion" parameterType="opinionVO">
  		delete opinion where opinionNO = #{opinionNO} and opinionPwd = #{opinionPwd}
  	</delete>
+ 	
 </mapper>
