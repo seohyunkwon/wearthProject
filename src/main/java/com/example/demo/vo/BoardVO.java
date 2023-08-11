@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Table(name = "board")
 public class BoardVO {
-	System.out.println("에에엑");
+	
 	@Id
 	private int boardno;
 	private int userno;

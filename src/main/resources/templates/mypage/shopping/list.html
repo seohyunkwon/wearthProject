@@ -51,17 +51,11 @@
             <th>결제금액</th>
             <th>상태</th>
           </tr>
-<<<<<<< HEAD
           
           <tr th:each="o:${order_list}"  
           th:onclick="'location.href=\'' + @{/mypage/shopping/detail(ordersno=${o.ordersNo})} + '\''">
             <td th:text="${o.ordersNo}"></td>
             <td th:text="${#dates.format(o.ordersDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-=======
-          <tr th:each="o:${order_list}">
-            <td th:text="${o.ordersNo}"><a  th:href="@{/mypage/shopping/detail/(ordersNo=${o.ordersNo})}"></a></td>
-            <td th:text="${o.ordersDate}"></td>
->>>>>>> refs/heads/yein2
             <td>대나무 칫솔 외 1개</td>
             <td th:text="${o.ordersPrice}"></td>
             <td th:text="${o.ordersStatus}"></td>
