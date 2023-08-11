@@ -11,7 +11,16 @@ import lombok.Data;
 
 @Table(name = "goods")
 public class GoodsVO {
-	
+
+	@Override
+	public String toString() {
+		return "GoodsVO [goodsNo=" + goodsNo + ", categoryNo=" + categoryNo + ", goodsName=" + goodsName
+				+ ", goodsPrice=" + goodsPrice + ", goodsUpdate=" + goodsUpdate + ", goodsCompany=" + goodsCompany
+				+ ", shipPrice=" + shipPrice + ", goodsStock=" + goodsStock + ", goodsDC=" + goodsDC + ", addPoint="
+				+ addPoint + ", origin=" + origin + ", mainFname=" + mainFname + ", addFname=" + addFname
+				+ ", infoFname=" + infoFname + "]";
+	}
+
 	public int getGoodsNo() {
 		return goodsNo;
 	}
@@ -111,4 +120,5 @@ public class GoodsVO {
 	private String mainFname;
 	private String addFname;
 	private String infoFname;
+
 }

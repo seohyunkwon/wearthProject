@@ -96,14 +96,14 @@ public class UserinfoController {
 		model.addAttribute("error", error);
 	}
 
-	@GetMapping("kakao/callback")
-	public String kakao(String code) {
-		System.out.println("code : "+code);
-		String accessToken = kus.getKakaoAccessToken(code);
-		Optional<UsersVO> u = kus.getUserInfo(accessToken);
-		System.out.println("userinfo : "+ (u.isPresent()?u.get():"empty!!"));
-		return "redirect:/";
-	}
+//	@GetMapping("kakao/callback")
+//	public String kakao(String code) {
+//		System.out.println("code : "+code);
+//		String accessToken = kus.getKakaoAccessToken(code);
+//		Optional<UsersVO> u = kus.getUserInfo(accessToken);
+//		System.out.println("userinfo : "+ (u.isPresent()?u.get():"empty!!"));
+//		return "redirect:/";
+//	}
 	
 //	@PostMapping("/userinfo/kakaoLogin")
 //	public String kakaoLogin(@RequestParam("id") String id, 
@@ -151,122 +151,122 @@ public class UserinfoController {
 //			return "redirect:/";
 //		}
 //	}
-
-	@GetMapping("userinfo/signup")
-	public void signupForm() {
-		System.out.println("회원가입 폼 실행");
-	}
-	
-	@GetMapping("userinfo/order")
-	public void order() {
-	}
-
-	@GetMapping("userinfo/findId")
-	public void find(String email, String phone) {
-
-	}
-
-	@GetMapping("userinfo/checkId")
-	@ResponseBody
-	public String checkId(String id) {
-		String result = "T";
-		if (us.findById(id).isPresent()) {
-			result = "F";
-		}
-		return result;
-	}
-
-	@GetMapping("userinfo/checkNickname")
-	@ResponseBody
-	public String checkNickname(String nickname) {
-		String result = "T";
-		if (us.findByNickname(nickname).isPresent()) {
-			result = "F";
-		}
-		return result;
-	}
-
-	@GetMapping("userinfo/checkEmail")
-	@ResponseBody
-	public String checkEmail(String email) {
-		String msg = null;
-		if (us.findByEmail(email).isPresent()) {
-			msg = "존재하는 이메일입니다.\n다른 이메일을 입력해주세요.";
-		}
-		return msg;
-	}
-
-	@GetMapping("userinfo/checkPhone")
-	@ResponseBody
-	public String checkPhone(String phone) {
-		String result = "T";
-		if (us.findByPhone(phone).isPresent()) {
-			result = "F";
-		}
-		return result;
-	}
-
-	@GetMapping("userinfo/isVaildEmail")
-	@ResponseBody
-	public String code(String email, HttpSession session) {
-		String code = sendEmail(email);
-		session.setAttribute("code", code);
-		session.setMaxInactiveInterval(180);
-		return "인증번호를 발송했습니다.";
-
-	}
-
-	@PostMapping("userinfo/isVaildEmail")
-	@ResponseBody
-	public String isVaildEmail(String code, HttpSession session) {
-		String trueCode = session.getAttribute("code").toString();
-		if (trueCode.equals(code)) {
-			return "T";
-		} else {
-			return "F";
-		}
-	}
-
-	@PostMapping("userinfo/findIdByEmail")
-	@ResponseBody
-	public String findIdByEmail(String email) {
-		Optional<UsersVO> u = us.findByEmail(email);
-		return u.isPresent() ? u.get().getId() : null;
-	}
-
-	@PostMapping("userinfo/findIdByPhone")
-	@ResponseBody
-	public String findIdByPhone(String phone) {
-		Optional<UsersVO> u = us.findByPhone(phone);
-		return u.isPresent() ? u.get().getId() : null;
-	}
-
-	private String sendEmail(String email) {
-		SecureRandom r = new SecureRandom();
-		String code = r.nextInt(9000) + 1000 + "";
-		String subject = "[Wearth] 이메일 인증코드입니다.";
-		String text = "<h2>[Wearth] 회원가입을 위한 인증코드입니다.</h2>" + "<hr>" + "<h3>인증코드 : " + code + "</h3>";
-		try {
-			MimeMessage mimeMessage = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-			helper.setFrom("wearth2023@gmail.com");
-			helper.setTo(email);
-			helper.setSubject(subject);
-			helper.setText(text, true);
-			mailSender.send(mimeMessage);
-		} catch (Exception e) {
-			System.out.println("userinfo/isVaildEmail 예외발생: " + e.getMessage());
-		}
-		return code;
-	}
-
-	private String makePwd() {
-	    StringBuilder pwd = new StringBuilder();
-	    SecureRandom r = new SecureRandom();
-	    pwd.append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9))
-	            .append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A'));
-	    return pwd.toString();
-	}
+//
+//	@GetMapping("userinfo/signup")
+//	public void signupForm() {
+//		System.out.println("회원가입 폼 실행");
+//	}
+//	
+//	@GetMapping("userinfo/order")
+//	public void order() {
+//	}
+//
+//	@GetMapping("userinfo/findId")
+//	public void find(String email, String phone) {
+//
+//	}
+//
+//	@GetMapping("userinfo/checkId")
+//	@ResponseBody
+//	public String checkId(String id) {
+//		String result = "T";
+//		if (us.findById(id).isPresent()) {
+//			result = "F";
+//		}
+//		return result;
+//	}
+//
+//	@GetMapping("userinfo/checkNickname")
+//	@ResponseBody
+//	public String checkNickname(String nickname) {
+//		String result = "T";
+//		if (us.findByNickname(nickname).isPresent()) {
+//			result = "F";
+//		}
+//		return result;
+//	}
+//
+//	@GetMapping("userinfo/checkEmail")
+//	@ResponseBody
+//	public String checkEmail(String email) {
+//		String msg = null;
+//		if (us.findByEmail(email).isPresent()) {
+//			msg = "존재하는 이메일입니다.\n다른 이메일을 입력해주세요.";
+//		}
+//		return msg;
+//	}
+//
+//	@GetMapping("userinfo/checkPhone")
+//	@ResponseBody
+//	public String checkPhone(String phone) {
+//		String result = "T";
+//		if (us.findByPhone(phone).isPresent()) {
+//			result = "F";
+//		}
+//		return result;
+//	}
+//
+//	@GetMapping("userinfo/isVaildEmail")
+//	@ResponseBody
+//	public String code(String email, HttpSession session) {
+//		String code = sendEmail(email);
+//		session.setAttribute("code", code);
+//		session.setMaxInactiveInterval(180);
+//		return "인증번호를 발송했습니다.";
+//
+//	}
+//
+//	@PostMapping("userinfo/isVaildEmail")
+//	@ResponseBody
+//	public String isVaildEmail(String code, HttpSession session) {
+//		String trueCode = session.getAttribute("code").toString();
+//		if (trueCode.equals(code)) {
+//			return "T";
+//		} else {
+//			return "F";
+//		}
+//	}
+//
+//	@PostMapping("userinfo/findIdByEmail")
+//	@ResponseBody
+//	public String findIdByEmail(String email) {
+//		Optional<UsersVO> u = us.findByEmail(email);
+//		return u.isPresent() ? u.get().getId() : null;
+//	}
+//
+//	@PostMapping("userinfo/findIdByPhone")
+//	@ResponseBody
+//	public String findIdByPhone(String phone) {
+//		Optional<UsersVO> u = us.findByPhone(phone);
+//		return u.isPresent() ? u.get().getId() : null;
+//	}
+//
+//	private String sendEmail(String email) {
+//		SecureRandom r = new SecureRandom();
+//		String code = r.nextInt(9000) + 1000 + "";
+//		String subject = "[Wearth] 이메일 인증코드입니다.";
+//		String text = "<h2>[Wearth] 회원가입을 위한 인증코드입니다.</h2>" + "<hr>" + "<h3>인증코드 : " + code + "</h3>";
+//		try {
+//			MimeMessage mimeMessage = mailSender.createMimeMessage();
+//			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//			helper.setFrom("wearth2023@gmail.com");
+//			helper.setTo(email);
+//			helper.setSubject(subject);
+//			helper.setText(text, true);
+//			mailSender.send(mimeMessage);
+//		} catch (Exception e) {
+//			System.out.println("userinfo/isVaildEmail 예외발생: " + e.getMessage());
+//		}
+//		return code;
+//	}
+//
+//	private String makePwd() {
+//	    StringBuilder pwd = new StringBuilder();
+//	    SecureRandom r = new SecureRandom();
+//	    pwd.append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9))
+//	            .append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A'));
+//	    return pwd.toString();
+//	}
 
 	
 }

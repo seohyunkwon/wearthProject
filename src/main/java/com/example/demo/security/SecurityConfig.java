@@ -73,7 +73,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.httpBasic().disable();
-		http.authorizeRequests().requestMatchers("/**", "/userinfo/signup/**", "/userinfo/kakaoLogin").permitAll()
+		http.authorizeRequests().requestMatchers("/**", "/userinfo/signup/**", "/userinfo/kakaoLogin" ).permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated();
 
 		http.formLogin().loginPage("/userinfo/login").loginProcessingUrl("/userinfo/login").permitAll()
@@ -81,9 +81,9 @@ public class SecurityConfig {
 
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/userinfo/logout")).invalidateHttpSession(true)
 				.logoutSuccessUrl("/");
-
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
+//		http.csrf().disable();
 		return http.getOrBuild();
 	}
 

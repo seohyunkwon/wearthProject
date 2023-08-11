@@ -24,4 +24,9 @@ public class GoodsMybatisRepository {
 	public static GoodsVO detailGoods(int goodsNo) {
 		return ShopDBManager.detailGoods(goodsNo);
 	}
+
+	public static int getTotalRecord(Integer categoryNo) {
+		return ShopDBManager.getTotalRecord(categoryNo);
+	}
+	
 }

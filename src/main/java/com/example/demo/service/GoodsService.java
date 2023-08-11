@@ -6,9 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.repository.CartMybatisRepository;
 import com.example.demo.repository.GoodsJpaRepository;
 import com.example.demo.repository.GoodsMybatisRepository;
+import com.example.demo.repository.LikedMybatisRepository;
+import com.example.demo.vo.CartVO;
+import com.example.demo.vo.DetailCartVO;
 import com.example.demo.vo.GoodsVO;
+import com.example.demo.vo.LikedVO;
 
 import lombok.Setter;
 
@@ -18,7 +23,13 @@ public class GoodsService {
 
 	@Autowired
 	private GoodsJpaRepository gj;
+	@Autowired
 	private GoodsMybatisRepository gm;
+	@Autowired
+	private CartMybatisRepository cm;
+	@Autowired
+	private LikedMybatisRepository lm;
+	
 	
 	//전체 상품 목록 조회
 	public List<GoodsVO> findGoods(HashMap<Object, Object> map){
@@ -36,4 +47,50 @@ public class GoodsService {
 
 	}
 	
+	//전체 레코드 수 조회
+	public int getTotalRecord(Integer categoryNo) {
+		return gm.getTotalRecord(categoryNo);
+	}
+	
+	//좋아요 수 추가
+	public int insertGoodsLiked(HashMap<String, Object> map) {
+		return lm.insertGoodsLiked(map);
+	}
+	
+	//좋아요 취소 
+	public int deleteGoodsLiked(HashMap<String, Object> map) {
+		return lm.deleteGoodsLiked(map);
+	}
+	
+	//회원별 상품 좋아요목록
+	public List<LikedVO> findLikedGoodsByUserNo(int userNo){
+		return lm.findLikedGoodsByUserNo(userNo);
+	}
+	//장바구니 추가
+	public int insertCart(HashMap<String, Object> map) {
+		return cm.insertCart(map);
+	}
+	//유저별 장바구니 조회
+	public List<DetailCartVO> findCartByUserNo(int userNo) {
+		return cm.findCartByUserNo(userNo);
+	}
+	
+	//선택한 장바구니 품목 삭제
+	public int deleteCartByGoodsNo(HashMap<String, Object> map) {
+		return cm.deleteCartByGoodsNo(map);
+	}
+	
+	//품절된 장바구니 품목 삭제
+	public int deleteCartByGoodsStock(int userNo) {
+		return cm.deleteCartByGoodsStock(userNo);
+	}
+	
+	//장바구니 수량 변경
+	public int updateCartCnt(HashMap<String, Object>map) {
+		return cm.updateCartCnt(map);
+	}
+	
+
+	
+		
 }

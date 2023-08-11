@@ -34,7 +34,11 @@ jQuery(document).ready(function($)
 	var menuActive = false;
 	var hamburgerClose = $('.hamburger_close');
 	var fsOverlay = $('.fs_menu_overlay');
-
+	
+	$(".info").show();
+	$(".review").hide();
+	$(".qna").hide();
+	
 	setHeader();
 
 	$(window).on('resize', function()
@@ -56,48 +60,7 @@ jQuery(document).ready(function($)
 	
 	
 
-	/* 
-
-	2. Set Header
-
-	*/
-
-	function setHeader()
-	{
-		if(window.innerWidth < 992)
-		{
-			if($(window).scrollTop() > 100)
-			{
-				header.css({'top':"0"});
-			}
-			else
-			{
-				header.css({'top':"0"});
-			}
-		}
-		else
-		{
-			if($(window).scrollTop() > 100)
-			{
-				header.css({'top':"-50px"});
-			}
-			else
-			{
-				header.css({'top':"0"});
-			}
-		}
-		if(window.innerWidth > 991 && menuActive)
-		{
-			closeMenu();
-		}
-	}
-
-	/* 
-
-	3. Init Menu
-
-	*/
-
+	
 	function initMenu()
 	{
 		if(hamburger.length)
@@ -177,32 +140,6 @@ jQuery(document).ready(function($)
 
 	/* 
 
-	4. Init Thumbnail
-
-	*/
-
-	function initThumbnail()
-	{
-		if($('.single_product_thumbnails ul li').length)
-		{
-			var thumbs = $('.single_product_thumbnails ul li');
-			var singleImage = $('.single_product_image_background');
-
-			thumbs.each(function()
-			{
-				var item = $(this);
-				item.on('click', function()
-				{
-					thumbs.removeClass('active');
-					item.addClass('active');
-					var img = item.find('img').data('image');
-					singleImage.css('background-image', 'url(' + img + ')');
-				});
-			});
-		}	
-	}
-
-	/* 
 
 	5. Init Quantity
 
@@ -268,78 +205,8 @@ jQuery(document).ready(function($)
 		}
 	}
 
-	/* 
-
-	7. Init Favorite
-
-	*/
-
-	function initFavorite()
-	{
-		if($('.product_favorite').length)
-		{
-			var fav = $('.product_favorite');
-
-			fav.on('click', function()
-			{
-				fav.toggleClass('active');
-			});
-		}
-	}
-
-	/* 
-
-	8. Init Tabs
-
-	*/
-
-	function initTabs()
-	{
-		if($('.tabs').length)
-		{
-			var tabs = $('.tabs li');
-			var tabContainers = $('.tab_container');
-
-			tabs.each(function()
-			{
-				var tab = $(this);
-				var tab_id = tab.data('active-tab');
-
-				tab.on('click', function()
-				{
-					if(!tab.hasClass('active'))
-					{
-						tabs.removeClass('active');
-						tabContainers.removeClass('active');
-						tab.addClass('active');
-						$('#' + tab_id).addClass('active');
-					}
-				});
-			});
-		}
-	}
 	
-	$('.owl-carousel').owlCarousel({
-  loop: true,
-  margin: 10,
-  nav: true,
-  navText: [
-    "<i class='fa fa-caret-left'></i>",
-    "<i class='fa fa-caret-right'></i>"
-  ],
-  autoplay: true,
-  autoplayHoverPause: true,
-  responsive: {
-    0: {
-      items: 1
-    },
-    600: {
-      items: 3
-    },
-    1000: {
-      items: 5
-    }
-  }
-})
+
+
 
 });
