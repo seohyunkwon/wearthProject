@@ -10,6 +10,7 @@
 		<typeAlias type="com.example.demo.vo.BoardVO" alias="boardVO" />
 		<typeAlias type="com.example.demo.vo.CommentsVO" alias="commentsVO" />
 		<typeAlias type="com.example.demo.vo.VolunteerVO" alias="volunteerVO" />
+		<typeAlias type="com.example.demo.vo.FilesVO" alias="filesVO" />
 		
 		<!-- 우종호 -->
 		<!-- 권서현 -->
@@ -50,6 +51,7 @@
 		<mapper resource="com/example/demo/mapper/boardMapper.xml" />
 		<mapper resource="com/example/demo/mapper/commentsMapper.xml" />
 		<mapper resource="com/example/demo/mapper/volunteerMapper.xml" />
+		<mapper resource="com/example/demo/mapper/filesMapper.xml" />
 		<!-- 우종호 -->
 		<!-- 권서현 -->
 		<mapper resource="com/example/demo/mapper/ordersMapper.xml" />

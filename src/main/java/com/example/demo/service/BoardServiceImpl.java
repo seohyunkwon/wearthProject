@@ -40,7 +40,6 @@ public class BoardServiceImpl implements BoardService {
 		return abJPA.getNextNo();
 	}
 	
-	
 	//게시글 등록
 	@Override
 	public void insert(BoardVO b) {

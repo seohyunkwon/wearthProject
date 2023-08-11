@@ -22,4 +22,15 @@ public class FilesDBManager extends DBManager{
 		totalRecord = session.selectOne("files.getTotalRecord");
 		return totalRecord;
 	}
+	
+	public static List<FilesVO> findByBoardno(int boardno) {
+		List<FilesVO> list;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("files.findByBoardno", boardno);
+		System.out.println("DBMANAGER:"+list+"***********************");
+		return list;
+	}
+	
+	
+	
 }

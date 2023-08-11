@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.db.FilesDBManager;
@@ -12,4 +14,7 @@ public class FilesMyBatisRepository {
 		return FilesDBManager.findFile();
 	}	
 	
+	public List<FilesVO> findByBoardno(int boardno){
+		return FilesDBManager.findByBoardno(boardno);
+	}
 }

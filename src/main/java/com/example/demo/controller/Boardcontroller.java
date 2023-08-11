@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 
+import org.apache.ibatis.io.ResolverUtil.IsA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.naming.SelfNaming;
 import org.springframework.stereotype.Controller;
@@ -94,51 +96,105 @@ public class Boardcontroller {
 		MultipartFile uploadFile = f.getUploadFile();
 		fname = uploadFile.getOriginalFilename();
 		System.out.println("fname: "+fname);
-		//첨부파일이 있는 경우
-		if(fname != null && !fname.equals("")) {
+		
+		if(fname != null && !fname.equals("")) {	//첨부파일이 있는 경우
 			try {
 				FileOutputStream fos = new FileOutputStream(path+"/"+fname);				
 				FileCopyUtils.copy(uploadFile.getBytes(), fos);
 				fos.close();
 				
 				f.setFileno(fs.getNextNo());	//파일 번호 부여
-				System.out.println("파일번호 : "+fs.getNextNo()); 		//여기까지 정상 작동
+				System.out.println("파일번호 : "+fs.getNextNo());
 				f.setBoardno(b.getBoardno());	//input hidden으로 게시글 번호 담겨있음..
 				System.out.println("f.getBoardno:"+f.getBoardno());
 				f.setFname(fname);
-				
-				
-				fs.insertInBoard(f);
+
+				bs.insert(b);	//게시글 업로드
+				fs.insertInBoard(f);	//게시글의 첨부파일 업로드
 				System.out.println("******************파일업로드 완료*******************");
 			}catch (Exception e) {
-				System.out.println("파일 업로드 예외발생:"+e.getMessage());
-				
-				
-				
+				bs.delete(b.getBoardno());
+				System.out.println("파일 업로드 예외발생:"+e.getMessage());	
 			}
-		}else {
-			fname = "";
+		}else {	//첨부파일이 없는 경우
+			bs.insert(b);
 		}
-		bs.insert(b);
+	
 		ModelAndView mav = new ModelAndView("redirect:/board/list/1");	//게시글 작성 완료시 1페이지로 이동
 		return mav;
 	}
 	
-	//이미지 파일도 삭제되게끔 수정 필요함
+	//게시글 삭제, 이미지파일 삭제
 	@GetMapping("/board/delete/{boardno}")
 	public ModelAndView delete(@PathVariable("boardno") int boardno, HttpServletRequest request) {
 		System.out.println("board delete 동작-----------------------------------------------");
 		ModelAndView mav = new ModelAndView("redirect:/board/list/1");
-		//이미지 파일이 있다면(해딩 boardno를 가지고 있는 파일이 있는지 select해야한다.)
-		//fs.findByBoardno가 null이라면, null이 아니라면
-		//String path = request.getServletContext().getRealPath("/images");
-		/*
-		 * String fname = bs.findById(no).getFname(); if(bs.deleteBoard(no, pwd) == 1) {
-		 * if(fname != null && !fname.equals("")) { File file = new
-		 * File(path+"/"+fname); file.delete(); } }
-		 */
-		bs.delete(boardno);
-		System.out.println(boardno+"번 게시글 삭제 완료 ");
+
+		//첨부파일 없는 경우
+		//여러개로 만들거 감안해서 list로 함
+		if(fs.findByBoardno(boardno).size()!=0) {
+			System.out.println("첨부파일 개수:"+fs.findByBoardno(boardno).size());
+			String path = request.getServletContext().getRealPath("/board");
+			String fname = fs.findByBoardno(boardno).get(0).getFname();	//추후 반복문으로 list의 size만큼 돌게 수정
+			File file = new File(path+"/"+fname);
+			file.delete();
+			fs.deleteInBoard(boardno);
+			bs.delete(boardno);
+			System.out.println(boardno+"번 게시글 삭제 완료 ");
+		}else {
+			System.out.println("첨부파일 없음");
+			bs.delete(boardno);
+			System.out.println(boardno+"번 게시글 삭제 완료 ");
+		}
+		return mav;
+	}
+	
+	//실천하기 게시글 수정 - JPA
+	@GetMapping("/board/update/{boardno}")
+	public String update(@PathVariable("boardno") Integer boardno, Model model) {
+		System.out.println("boardUpdate Controller---------------------------------");
+		//findby boardno으로 게시글 정보 불러와서 수정 내용에 띄워야 함
+		model.addAttribute("boardno", bs.getNextNo());
+		return "board/update";
+	}
+	
+	//실천하기 게시글 수정 완료 - JPA
+	//사진 업로드 하지 않을 경우 default로 보여줄 값 설정해야함
+	//file이 null 일 때 특정 이미지 불러오도록 설정할 예정
+	@PostMapping("/board/update")
+	public ModelAndView update(BoardVO b, FilesVO f, HttpServletRequest request) {
+		System.out.println("insert POST Controller---------------------------------");		
+		String path = request.getServletContext().getRealPath("/board");
+		System.out.println("path:"+path);
+		String fname = null;
+		MultipartFile uploadFile = f.getUploadFile();
+		fname = uploadFile.getOriginalFilename();
+		System.out.println("fname: "+fname);
+		
+		if(fname != null && !fname.equals("")) {	//첨부파일이 있는 경우
+			try {
+				FileOutputStream fos = new FileOutputStream(path+"/"+fname);				
+				FileCopyUtils.copy(uploadFile.getBytes(), fos);
+				fos.close();
+				
+				f.setFileno(fs.getNextNo());	//파일 번호 부여
+				System.out.println("파일번호 : "+fs.getNextNo());
+				f.setBoardno(b.getBoardno());	//input hidden으로 게시글 번호 담겨있음..
+				System.out.println("f.getBoardno:"+f.getBoardno());
+				f.setFname(fname);
+
+				bs.insert(b);	//게시글 업로드
+				fs.insertInBoard(f);	//게시글의 첨부파일 업로드
+				System.out.println("******************파일업로드 완료*******************");
+			}catch (Exception e) {
+				bs.delete(b.getBoardno());
+				System.out.println("파일 업로드 예외발생:"+e.getMessage());	
+			}
+		}else {	//첨부파일이 없는 경우
+			bs.insert(b);
+		}
+	
+		ModelAndView mav = new ModelAndView("redirect:/board/list/1");	//게시글 작성 완료시 1페이지로 이동
 		return mav;
 	}
 	

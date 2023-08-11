@@ -20,10 +20,20 @@ public interface FilesJpaRepository extends JpaRepository<FilesVO, Integer> {
 	@Transactional
 	public void insertInBoard(FilesVO f);
 	
+	//실천하기 게시글 내 파일 삭제
+	@Modifying
+	@Query(value = "delete from Files f where f.boardno=?1", nativeQuery = true)
+	@Transactional
+	public void deleteInBoard(int boardno);
+	
+	
 	//봉사하기 게시글 내 파일 첨부
 	@Modifying
 	@Query(value = "insert into FilesVO f(f.fileno, f.volunteerno, f.fname) values(:#{#f.fileno},:#{#f.volunteerno},:#{#f.fname})", nativeQuery = true)
 	@Transactional
 	public void insertInVolunteer(FilesVO f);
 
+	
+	
+	
 }

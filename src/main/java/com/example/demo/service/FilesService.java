@@ -17,6 +17,12 @@ public interface FilesService {
 	//실천하기 게시판 파일 insert
 	public void insertInBoard(FilesVO f);
 	
+	//실천하기 게시판 파일 delete하기 위해 파일 유무 확인
+	public List<FilesVO> findByBoardno(int boardno);
+	
+	//실천하기 게시판 파일 delete
+	public void deleteInBoard(int boardno);
+	
 	//봉사하기 게시판 파일 insert
 	public void insertInVolunteer(FilesVO f);
 }

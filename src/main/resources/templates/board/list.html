@@ -221,7 +221,7 @@
 				
 				  <div th:class="modal-footer-left" style="visibility:hidden; gap:1rem;" >
 
-					   <button type="button" class="btn custom-btn" id="update">수정</button>
+					   <button type="button" class="btn custom-btn" id="btnUpdate">수정</button>
 					   <button type="button" class="btn custom-btn" id="btnDelete">삭제</button>
 				  </div>
 				  <div class="modal-footer-right">
@@ -255,7 +255,6 @@
 				console.log("작성자번호:"+writerNo);
 				//session.u.userno와 writerNo가 같으면 
 				if(writerNo == loginUser){
-					alert("같음");
 					$(".modal-footer-left").css("visibility", "visible");
 				}else{
 					$(".modal-footer-left").css("visibility", "hidden");
@@ -306,6 +305,12 @@
 				}else{
 					event.preventDefault();
 				}
+			});
+			
+			//게시글 수정
+			$("#btnUpdate").click(function(event){
+				console.log("수정할 게시글 번호:"+boardno);
+				location.href="/board/update/"+boardno;
 			});
 			
 			//댓글 입력
