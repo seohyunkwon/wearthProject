@@ -103,12 +103,6 @@ public class ShopController {
 		model.addAttribute("g", gs.detailGoods(goodsNo));
 	}
 
-
-	// 결제페이지 조회
-	@GetMapping("shop/order")
-	public String order() {
-		return "shop/order";
-	}
 	
 	//좋아요 버튼 클릭 시 db 추가
 	@PostMapping("/insertGoodsLiked")

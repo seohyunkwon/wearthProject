@@ -1,8 +1,9 @@
 package com.example.demo.security;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-
+@Getter
 @RequiredArgsConstructor
 public enum Role {
 	GUEST("GUEST", "손님"),
@@ -11,19 +12,4 @@ public enum Role {
 	
 	private final String key;
 	private final String title;
-	public String getKey() {
-		return key;
-	}
-	public String getTitle() {
-		return title;
-	}
-	private Role(String key, String title) {
-		this.key = key;
-		this.title = title;
-	}
-	
-	
-	
-	
 }
-

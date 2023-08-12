@@ -1,9 +1,13 @@
 package com.example.demo.db;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.demo.vo.CartVO;
 import com.example.demo.vo.DetailCartVO;
@@ -11,7 +15,18 @@ import com.example.demo.vo.GoodsCategoryVO;
 import com.example.demo.vo.GoodsVO;
 import com.example.demo.vo.LikedVO;
 
-public class ShopDBManager extends DBManager{
+public class ShopDBManager {
+	public static SqlSessionFactory sqlSessionFactory;
+	
+	static {
+		try {
+			String resource = "com/example/demo/mapper/sqlMapConfig.xml";
+			InputStream inputStream = Resources.getResourceAsStream(resource);
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		} catch (Exception e) {
+			System.out.println("예외발생 DBManager :"+e.getMessage());
+		}
+	}
 
 	//goods
 		public static List<GoodsVO> findGoods(HashMap<Object, Object> map){
