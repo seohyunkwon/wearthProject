@@ -9,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Optional;
 
 import javax.mail.internet.MimeMessage;
@@ -42,24 +41,32 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.expression.Sets;
 
-import com.example.demo.security.KakaoLoginService;
+import com.example.demo.repository.UserJpaRepository;
+import com.example.demo.security.UserDetailServiceImpl;
 import com.example.demo.service.UserInfoService;
-import com.example.demo.utils.CustomMailSender;
 import com.example.demo.vo.UsersVO;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 
 @Controller
-@Setter
+
 public class UserinfoController {
 
 	@Autowired
 	private UserInfoService us;
+
 
 	@Autowired
 	private UserDetailsService uds;
@@ -71,7 +78,7 @@ public class UserinfoController {
 	private BCryptPasswordEncoder encoder;
 	
 	@Autowired
-	private KakaoLoginService kus;
+	private JavaMailSender mailSender;
 
 	@PostMapping("userinfo/signup")
 	public String signup(UsersVO u) {
@@ -85,6 +92,8 @@ public class UserinfoController {
 	public void login(@RequestParam(value="error", required = false)String error, Model model) {
 		model.addAttribute("error", error);
 	}
+
+
 
 	@GetMapping("userinfo/signup")
 	public void signupForm() {
@@ -143,13 +152,22 @@ public class UserinfoController {
 	@GetMapping("userinfo/isVaildEmail")
 	@ResponseBody
 	public String code(String email, HttpSession session) {
-		HashMap<String, String> mail = CustomMailSender.makeCode();
-		String code = mail.get("code");
-		CustomMailSender.sendEmail(email, mail.get("subject"), mail.get("text"));
+		String code = sendEmail(email);
 		session.setAttribute("code", code);
 		session.setMaxInactiveInterval(180);
-		return code;
+		return "인증번호를 발송했습니다.";
 
+	}
+
+	@PostMapping("userinfo/isVaildEmail")
+	@ResponseBody
+	public String isVaildEmail(String code, HttpSession session) {
+		String trueCode = session.getAttribute("code").toString();
+		if (trueCode.equals(code)) {
+			return "T";
+		} else {
+			return "F";
+		}
 	}
 
 	@PostMapping("userinfo/findIdByEmail")
@@ -165,17 +183,33 @@ public class UserinfoController {
 		Optional<UsersVO> u = us.findByPhone(phone);
 		return u.isPresent() ? u.get().getId() : null;
 	}
-	
-	@PostMapping("userinfo/sendEmailCode")
-	@ResponseBody
-	public String findPwdByEmail(String email) {	
-		Optional<UsersVO> u = us.findByEmail(email);
-		if(!u.isPresent()) return null;
-		return null;
+
+	private String sendEmail(String email) {
+		SecureRandom r = new SecureRandom();
+		String code = r.nextInt(9000) + 1000 + "";
+		String subject = "[Wearth] 이메일 인증코드입니다.";
+		String text = "<h2>[Wearth] 회원가입을 위한 인증코드입니다.</h2>" + "<hr>" + "<h3>인증코드 : " + code + "</h3>";
+		try {
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+			helper.setFrom("wearth2023@gmail.com");
+			helper.setTo(email);
+			helper.setSubject(subject);
+			helper.setText(text, true);
+			mailSender.send(mimeMessage);
+		} catch (Exception e) {
+			System.out.println("userinfo/isVaildEmail 예외발생: " + e.getMessage());
+		}
+		return code;
+	}
+
+	private String makePwd() {
+	    StringBuilder pwd = new StringBuilder();
+	    SecureRandom r = new SecureRandom();
+	    pwd.append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9))
+	            .append((char) (r.nextInt(26) + 'A')).append(r.nextInt(9)).append((char) (r.nextInt(26) + 'A'));
+	    return pwd.toString();
 	}
 
 
-
-
-	
 }

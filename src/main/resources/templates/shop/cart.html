@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>장바구니 </title>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script src="/js/shop/cart/cart.js"></script>
+	<script src="/js/shop/cart.js"></script>
 	<link rel="stylesheet" href="/css/shop/cart/cart.css" />
-	<link rel="" href="" />
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Colo Shop Template">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}"> 
 
 </head>
 
 <body>
-	<div th:include="main/header.html"></div>
+	 <div th:include="main/header"></div> 
+	
 	<div class="content">
 		<h1 style="font-weight: bold;">장바구니</h1>
 		<br />
@@ -24,93 +26,76 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">
+					<th scope="col" style="width: 15%;">
 						<div class="default">
 							<div class="green">
 								<div class="group green">
-									<input type="checkbox" id="unchecked_green">
+									<input type="checkbox" id="unchecked_green" class="checked_All">
 								</div>
 							</div>
 						</div>
 					</th>
-					<th scope="col">상품정보</th>
-					<th scope="col">수량</th>
-					<th scope="col">주문금액</th>
-					<th scope="col">배송정보</th>
+					<th colspan="2" scope="col" style="width: 40%;">상품정보</th>
+					<th scope="col" style="width: 15%;">수량</th>
+					<th scope="col" style="width: 15%;">주문금액</th>
+					<th scope="col" style="width: 15%;">배송정보</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
+			<tbody >
+				
+				<tr th:each="c : ${cart}" class="tr" id="tr" >
+				
 					<td>
+						<input type="hidden" th:value="${c.goodsNo}" id="goodsNo"/>
+						<input type="hidden" th:value="${c.userNo}" id="userNo"/>
+						<input type="hidden" th:value="${c.goodsStock}" id="goodsStock"/>
+					
 						<div class="default">
 							<div class="green">
 								<div class="group green">
-									<input type="checkbox" id="unchecked_green">
+									<input type="checkbox" id="unchecked_green" name ="check" class="td_check">
 								</div>
 							</div>
 						</div>
 					</td>
-					<td style="text-align: left;"> <img src="/images/shop/susemi1.jpeg"
-							style="width : 50px; height: 50px;" /> [소락] 천연 수세미 세트
+					<td colspan="2" style="text-align: left;">  <img th:src="@{/images/shop/}+${c.mainFname}" style="width : 70px; height: 70px;" />  
+					<span th:text="'['+${c.goodsCompany}+']'+${c.goodsName}"></span>
 					</td>
 					<td>
 						<div class="num-block skin-5">
 							<div class="num-in">
 								<span class="minus dis">-</span>
-								<input type="text" class="in-num" value="1" readonly="">
+								<input type="text" class="in-num" id="cnt" th:value="${c.cartCnt}" readonly="" >
 								<span class="plus">+</span>
 							</div>
 						</div>
 					</td>
 					<td>
-						3000 <br />
+						<span id="price" th:text="${c.goodsPrice}*${c.cartCnt}+'원'"></span>
+						 <br />
 						<button class="pay-btn-small" onclick="location.href='/shop/order'">주문하기</button>
 					</td>
-					<td>3000</td>
+					<td><span id="ship" th:text="${c.shipPrice }+'원'"></span></td>
 				</tr>
-				<tr>
-					<td>
-						<div class="default">
-							<div class="green">
-								<div class="group green">
-									<input type="checkbox" id="unchecked_green">
-								</div>
-							</div>
-						</div>
-					</td>
-					<td style="text-align: left;"> <img src="/images/shop/susemi1.jpeg"
-							style="width : 50px; height: 50px;" /> [소락] 천연 수세미 세트
-					</td>
-					<td>
-						<div class="num-block skin-5">
-							<div class="num-in">
-								<span class="minus dis">-</span>
-								<input type="text" class="in-num" value="1" readonly="">
-								<span class="plus">+</span>
-							</div>
-						</div>
-					</td>
-					<td>3000</td>
-					<td>3000</td>
-				</tr>
+				
 			</tbody>
 		</table>
 		<hr />
-		<button class="delete-btn">선택상품 삭제</button>
-		<button class="delete-btn">품절상품 삭제</button>
+		<button class="delete-btn" id="delete-check">선택상품 삭제</button>
+		<button class="delete-btn" id="delete-stock">품절상품 삭제</button>
 
 		<!--주문 합계 start-->
 		<hr />
-		총 주문 수량(2개)
+		총 주문 수량(<span id="totalCnt"></span>)
 		<hr />
 		<div class="order-tot">
 			<table class="orderTable">
 				<tr>
-					<td class="calc">3000원</td>
+					<td class="goodsPrice">0</td>
 					<td class="calc">+</td>
-					<td class="calc">3000원</td>
+					<td class="shipPrice">0</td>
 					<td class="calc">=</td>
-					<td class="calc" style="color: #43a06f;">6000원</td>
+					<td class="totalPrice" style="color: #43a06f;">0</td>
 				</tr>
 				<tr>
 					<td>상품금액</td>

@@ -6,18 +6,54 @@ import com.example.demo.vo.UsersVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+
+
 @Slf4j
-@Data
 @Builder
 public class OAuth2Attributes {
+
+	
 	private Map<String, Object> attributes;
 	private String nameAttributeKey;
 	private String email;
 	private String id;
+
+	
+	
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Object> attributes) {
+		this.attributes = attributes;
+	}
+
+	public String getNameAttributeKey() {
+		return nameAttributeKey;
+	}
+
+	public void setNameAttributeKey(String nameAttributeKey) {
+		this.nameAttributeKey = nameAttributeKey;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public OAuth2Attributes(Map<String, Object> attributes, String nameAttributeKey, String email,
 			String id) {
@@ -47,12 +83,12 @@ public class OAuth2Attributes {
 	// .. getter/setter 생략
 
 	public UsersVO toEntity() {
-		return UsersVO.builder()
-				.id(id)
-				.pwd(email)
-				.email(email)
-				.role(Role.USER)
-				.build();
+		UsersVO u = new UsersVO();
+		u.setId(id);
+		u.setPwd(email);
+		u.setEmail(email);
+		u.setRole(Role.USER);
+		return u;
 	}
 
 	@SneakyThrows
@@ -60,7 +96,7 @@ public class OAuth2Attributes {
 			Map<String, Object> attributes) {
 		log.info("userNameAttributeName = {}",
 				new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userNameAttributeName));
-		log.info("attributes = {}", new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(attributes));
+		log.info("attributes = {}",  new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(attributes));
 		String registrationIdToLower = registrationId.toLowerCase();
 		switch (registrationIdToLower) {
 		case "naver":
@@ -89,7 +125,7 @@ public class OAuth2Attributes {
 				.nameAttributeKey(userNameAttributeName)
 				.build();
 			
-	}
 
+	}
 }
 

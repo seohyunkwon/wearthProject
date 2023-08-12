@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.ToString;
 
 @Entity
-@Data
 @Table(name = "opinion")
 @ToString
 public class OpinionVO {
@@ -30,5 +29,93 @@ public class OpinionVO {
 	private int reviewScore;
 	private int answerNo;
 	private String type;
+	public int getOpinionNO() {
+		return opinionNO;
+	}
+	public void setOpinionNO(int opinionNO) {
+		this.opinionNO = opinionNO;
+	}
+	public int getEduNO() {
+		return eduNO;
+	}
+	public void setEduNO(int eduNO) {
+		this.eduNO = eduNO;
+	}
+	public int getGoodsNo() {
+		return goodsNo;
+	}
+	public void setGoodsNo(int goodsNo) {
+		this.goodsNo = goodsNo;
+	}
+	public int getLecNo() {
+		return lecNo;
+	}
+	public void setLecNo(int lecNo) {
+		this.lecNo = lecNo;
+	}
+	public String getID() {
+		return ID;
+	}
+	public void setID(String iD) {
+		ID = iD;
+	}
+	public String getOpinionName() {
+		return opinionName;
+	}
+	public void setOpinionName(String opinionName) {
+		this.opinionName = opinionName;
+	}
+	public String getOpinionContent() {
+		return opinionContent;
+	}
+	public void setOpinionContent(String opinionContent) {
+		this.opinionContent = opinionContent;
+	}
+	public Date getOpinionDate() {
+		return opinionDate;
+	}
+	public void setOpinionDate(Date opinionDate) {
+		this.opinionDate = opinionDate;
+	}
+	public boolean isOpinionSecret() {
+		return opinionSecret;
+	}
+	public void setOpinionSecret(boolean opinionSecret) {
+		this.opinionSecret = opinionSecret;
+	}
+	public String getOpinionPwd() {
+		return opinionPwd;
+	}
+	public void setOpinionPwd(String opinionPwd) {
+		this.opinionPwd = opinionPwd;
+	}
+	public String getOpinionStatus() {
+		return opinionStatus;
+	}
+	public void setOpinionStatus(String opinionStatus) {
+		this.opinionStatus = opinionStatus;
+	}
+	public int getReviewScore() {
+		return reviewScore;
+	}
+	public void setReviewScore(int reviewScore) {
+		this.reviewScore = reviewScore;
+	}
+	public int getAnswerNo() {
+		return answerNo;
+	}
+	public void setAnswerNo(int answerNo) {
+		this.answerNo = answerNo;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	
+	
+
 }
 

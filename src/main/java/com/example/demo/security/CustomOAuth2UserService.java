@@ -18,7 +18,6 @@ import com.example.demo.repository.UserJpaRepository;
 import com.example.demo.vo.UsersVO;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,6 +29,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	private final UserJpaRepository ur;
 	private final HttpSession session;
 
+	
+
+	public CustomOAuth2UserService(KakaoLoginService kus, UserJpaRepository ur, HttpSession session) {
+		super();
+		this.kus = kus;
+		this.ur = ur;
+		this.session = session;
+	}
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		System.out.println("loadUser 실행");

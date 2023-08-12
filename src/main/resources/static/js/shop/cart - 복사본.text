@@ -12,9 +12,9 @@ $(function() {
 		var goodsPrice=0;
 		var shipPrice =0;
 		var userNo = $("#userNo").val();
+		alert(userNo)
 		var goodsNo = 0;
 		var delete_arr = [];
-		var totalCnt=0;
 		var chk =$("input[name=check]");
 		//맨 위에 체크박스 선택시 모든 체크박스 선택,선택해제
 		$('.checked_All').click(function(){	
@@ -27,7 +27,22 @@ $(function() {
 			clickEvent(event);
 			if($(this).is(":checked")){
 				$(this).prop("checked",true);	
+					//선택상품 삭제 누르면 삭제
+					$("#delete-check").click(function(){
+						console.log(delete_arr)
 				
+						$.ajax({
+							url : "/deleteCartByGoodsNo",
+							type : "post",
+							traditional : true,
+							data: {delete_arr: JSON.stringify(delete_arr)},
+							contentType : "application/json",
+							beforeSend: function (xhr) {xhr.setRequestHeader(header, token);},
+							success: function (data) {
+								alert("성공")
+							}
+						})
+					})
 			}else{$(this).prop("checked",false)}
 			
 		})	
@@ -38,32 +53,20 @@ $(function() {
 			var columns = row.children();		
 			 cnt = parseInt(columns.eq(2).find('#cnt').val());
 			 price = parseInt(columns.eq(3).find('#price').html());
-			
-					//선택상품 삭제 누르면 삭제
-					$("#delete-check").click(function(){
-						 $(row).each(function(){
-						goodsNo = parseInt(columns.eq(0).find("#goodsNo").val());
-						$.ajax({
-							url : "/deleteCartByGoodsNo",
-							type : "post",
-							data: {goodsNo:goodsNo, userNo:userNo},
-							beforeSend: function (xhr) {xhr.setRequestHeader(header, token);},
-							success: function (data) {
-								document.location.reload();
-							}
-						})
-					})
+			 $(columns.eq(0)).each(function(){
+				  var obj={
+			 "goodsNo" : parseInt(columns.eq(0).find("#goodsNo").val()) };
+			 delete_arr.push(obj);
 			 })			
 			
 			if($(event.target).is(":checked")){
 				goodsPrice += price;
-				totalCnt+=cnt;
 			}else{ 
 				goodsPrice-=price;
-				totalCnt-=cnt;
+			
 			}
 			console.log(goodsPrice)
-			$("#totalCnt").html(totalCnt+"개");
+			
 			if(goodsPrice < 30000){shipPrice=3000;
 			}else if(goodsPrice==0){shipPrice=0;
 			}else{shipPrice=0;}
@@ -133,25 +136,9 @@ $(function() {
 			}
 
 			$input.change();
-			alert(count)
-			var tr = $input.parents().parents().parents().parents();
-			var columns = tr.children();
-			goodsNo = columns.eq(0).find("#goodsNo").val();
-			console.log(goodsNo);
-			//db에 수량 업데이트하기
-			$.ajax({
-				url : "/updateCartCnt",
-				type : "post",
-				data : {userNo:userNo, cartCnt:count, goodsNo:goodsNo},
-				beforeSend: function (xhr) {xhr.setRequestHeader(header, token);},
-				success: function (data) {
-					document.location.reload();
-				}
-			})
 			return false;
 		});
-		
-		//
+
 	});
 	// product +/-
 })
