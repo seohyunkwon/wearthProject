@@ -30,13 +30,13 @@ public interface UserJpaRepository extends JpaRepository<UsersVO, Integer> {
 	// 아이디로 회원 찾기
 	public Optional<UsersVO> findById(String id);
 
-	// 닉네임으로 회원 찾기
-	public Optional<UsersVO> findByNickname(String nickname);
+   // 닉네임으로 회원 찾기
+   public Optional<UsersVO> findByNickname(String nickname);
 
-	// 이메일로 회원 찾기
-	public Optional<UsersVO> findByEmail(String email);
+   // 이메일로 회원 찾기
+   public Optional<UsersVO> findByEmail(String email);
 
-	// 전화번호로 회원 찾기
-	public Optional<UsersVO> findByPhone(String phone);
+   // 전화번호로 회원 찾기
+   public Optional<UsersVO> findByPhone(String phone);
 
 }

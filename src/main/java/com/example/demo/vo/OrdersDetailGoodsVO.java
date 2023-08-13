@@ -18,6 +18,8 @@ public class OrdersDetailGoodsVO {
 	private String mainfname;
 	
 }
+
+
 /*
 create or replace view ordersdetailgoods
  as

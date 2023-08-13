@@ -223,5 +223,5 @@ function searchResidence() {
 			document.getElementById('inputResidence').value = data.address;
 		}
 	}).open();
-
+}
 }

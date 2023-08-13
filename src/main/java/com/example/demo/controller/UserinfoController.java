@@ -41,22 +41,32 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.expression.Sets;
 
+import com.example.demo.repository.UserJpaRepository;
+import com.example.demo.security.UserDetailServiceImpl;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.vo.UsersVO;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 
 @Controller
-@Setter
+
 public class UserinfoController {
 
 	@Autowired
 	private UserInfoService us;
+
 
 	@Autowired
 	private UserDetailsService uds;
@@ -66,7 +76,7 @@ public class UserinfoController {
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-
+	
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -82,6 +92,8 @@ public class UserinfoController {
 	public void login(@RequestParam(value="error", required = false)String error, Model model) {
 		model.addAttribute("error", error);
 	}
+
+
 
 	@GetMapping("userinfo/signup")
 	public void signupForm() {
@@ -199,5 +211,5 @@ public class UserinfoController {
 	    return pwd.toString();
 	}
 
-	
+
 }

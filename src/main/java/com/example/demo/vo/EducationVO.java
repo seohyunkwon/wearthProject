@@ -1,16 +1,43 @@
 package com.example.demo.vo;
 
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-
 @Table(name = "education")
 public class EducationVO {
 	
+	
+	@Id
+	private int eduNO;
+	private String eduName;
+	
+	private String eduContent;
+	private String eduStatus;
+	private String eduApp;
+	private String eduAddr;
+	private String educator;
+	private String eduPhone;
+	
+	private String eduFile;
+	private String eduDetailFile;
+	private String eduSysdate;
+	private boolean liked;
+	
+	 // 좋아요 상태 설정 메소드
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+	// EducationVO 클래스에 isLiked 메소드 추가
+	public boolean isLiked(List<Integer> likedEduNOs) {
+	    return likedEduNOs.contains(this.eduNO);
+	}
 	public int getEduNO() {
 		return eduNO;
 	}
@@ -65,21 +92,21 @@ public class EducationVO {
 	public void setEduFile(String eduFile) {
 		this.eduFile = eduFile;
 	}
+	public String getEduDetailFile() {
+		return eduDetailFile;
+	}
+	public void setEduDetailFile(String eduDetailFile) {
+		this.eduDetailFile = eduDetailFile;
+	}
 	public String getEduSysdate() {
 		return eduSysdate;
 	}
 	public void setEduSysdate(String eduSysdate) {
 		this.eduSysdate = eduSysdate;
 	}
-	@Id
-	private int eduNO;
-	private String eduName;
-	private String eduContent;
-	private String eduStatus;
-	private String eduApp;
-	private String eduAddr;
-	private String educator;
-	private String eduPhone;
-	private String eduFile;
-	private String eduSysdate;
+	public boolean isLiked() {
+		return liked;
+	}
+	
+	
 }

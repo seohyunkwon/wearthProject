@@ -31,8 +31,6 @@ body {
 .num-block.skin-5 {
 	padding : 0;
 	width : 50%;
-	padding-left: 30%;
-	padding-right: 30%;
 }
 
 .skin-5 .num-in {
@@ -110,7 +108,7 @@ body {
 	height : 100px;
 
 }
-.calc{
+.calc,.goodsPrice,.shipPrice,.totalPrice{
 	font-weight: bold;
 	font-size: 20pt;
 }
