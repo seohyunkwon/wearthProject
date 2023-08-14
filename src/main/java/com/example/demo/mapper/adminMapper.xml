@@ -18,20 +18,27 @@
 
     </select>
 
-    <insert id="insertUser" parameterType= "usersVO">
-        INSERT INTO users (userno, id, pwd, u_name, date_birth, gender, email, nickname, date_reg, residence, phone, point, u_status)
-        VALUES (#{userno}, #{id}, #{pwd}, #{u_name}, #{date_birth}, #{gender}, #{email}, #{nickname}, #{date_reg}, #{residence}, #{phone}, #{point}, #{u_status})
+    <!-- 총 회원수 -->
+    <select id = "getTotalUser" resultType = "java.lang.Integer">
+        select count(*) from users
+    </select>
+
+    <!-- 아이디 중복확인 -->
+    <select id ="checkId" resultType = "java.lang.Integer">
+        SELECT id FROM users WHERE id = #{id}
+    </select>
+
+
+    <!-- 회원등록 -->
+    <insert id="insertUser">
+        INSERT INTO users (userno, id, pwd, u_name, date_birth, gender, email, nickname, date_reg, residence, phone, point, u_status, Role)
+        VALUES (seq_userno.NEXTVAL, #{id}, #{pwd}, #{u_name}, #{date_birth}, #{gender}, #{email}, #{nickname}, sysdate, #{residence}, #{phone}, #{point}, 'Y', 'USER')
     </insert>
 
     <!-- 회원삭제 -->
     <delete id = "deleteUser">
         delete from users where userno = #{userno}
     </delete>
-
-    <!-- 총 회원수 -->
-    <select id = "getTotalUser" resultType = "java.lang.Integer">
-        select count(*) from users
-    </select>
 
 
 </mapper>

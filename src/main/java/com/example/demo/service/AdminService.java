@@ -20,6 +20,13 @@ public class AdminService {
         return repository.getTotalUser();
     }
 
+    public int checkId(String id){
+        return repository.checkId(id);
+    }
+
+    public int insertUser(UsersVO u){
+        return repository.insertUser(u);
+    }
     public int deleteUser(int userno) {
         return repository.deleteUser(userno);
     }

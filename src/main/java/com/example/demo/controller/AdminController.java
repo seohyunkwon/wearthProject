@@ -22,6 +22,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+
+
     @GetMapping("/admin")
     public String admin1(){
         return "admin/Main";
@@ -81,6 +83,31 @@ public class AdminController {
         } catch (Exception e) {
             return "error";
         }
+    }
+
+    //**************************회원추가기능 ************************//
+    @PostMapping("/checkId")
+    @ResponseBody
+    public String checkId(@RequestParam String id) {
+        int result = adminService.checkId(id);
+
+        if (result == 1)
+            return "success";
+        else
+            return "fail";
+    }
+
+    @PostMapping("/insertUser")
+    @ResponseBody
+    public String insertUser(@RequestBody UsersVO u){
+        int result = adminService.insertUser(u);
+
+        if(result == 1 )
+            return "success";
+        else
+            return "fail";
+
+
     }
 
     //AdminList

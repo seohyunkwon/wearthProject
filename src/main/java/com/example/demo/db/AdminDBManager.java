@@ -29,21 +29,19 @@ public class AdminDBManager extends DBManager {
         return n;
     }
 
-    public static int checkId(String userId){
-        int re = -1;
+    public static int checkId(String id){
+        int re = -1; // 기본값 설정
         SqlSession session = sqlSessionFactory.openSession();
-        re = session.selectOne("admin.checkId", userId);
+        String result = session.selectOne("admin.checkId", id); // Integer로 받기
+        System.out.println(result);
+        if (result != null) { // null 체크
+            return 1;
+        }
         return re;
     }
 
-    public static int insertLecture (LectureVO l) {
-        int re = -1;
-        SqlSession session=sqlSessionFactory.openSession();
-        re = session.insert("lecture.insertLecture", l);
-        session.commit();
-        session.close();
-        return re;
-    }
+
+
     public static int InsertUser(UsersVO u){
         int re = -1;
         SqlSession session = sqlSessionFactory.openSession();

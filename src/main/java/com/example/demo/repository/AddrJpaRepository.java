@@ -10,4 +10,6 @@ public interface AddrJpaRepository extends JpaRepository<AddrVO, Integer> {
 		
 	public List<AddrVO> findByUserNo(int userno);
 
+
+
 }

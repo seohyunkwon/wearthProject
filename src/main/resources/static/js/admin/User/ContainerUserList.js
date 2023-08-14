@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    
+    //토큰선언
+    var header = $("meta[name='_csrf_header']").attr('content');
+    var token = $("meta[name='_csrf']").attr('content');
+    
     /* 체크박스 전체 선택 기능 */
     $('#selectAllCheckbox').change(function() {
         $('tbody input[type="checkbox"]').prop('checked', $(this).prop('checked'));
@@ -13,7 +18,8 @@ $(document).ready(function() {
         updateDeleteButton(); // 삭제 버튼 상태 업데이트
     });
 
-
+    //************************************아이디 생성 ***************************//
+    // 아이디 중복확인 checkId
     $('#checkIdButton').click(function() {
         var userId = $('#inputId').val();
         if (userId.trim() === '') {
@@ -22,9 +28,12 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/checkId', // 실제 URL에 맞게 변경 필요
+            url: '/checkId',
             type: 'POST',
             data: { id: userId },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token); // CSRF 토큰을 헤더에 추가
+            },
             success: function(response) {
                 if (response === "success") {
                     alert('중복된 아이디입니다');
@@ -32,13 +41,61 @@ $(document).ready(function() {
                     alert('사용가능한 아이디입니다');
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('AJAX 요청 중 에러 발생:', error);
+            error: function(error) {
+                alert('서버 오류로 중복확인에 실패했습니다.');
             }
         });
     });
 
-    /* 회원정보 삭제기능 */
+    //아이디 생성 saveButton
+    $('#saveButton').click(function() {
+        // 확인 메시지 띄우기
+
+        const isConfirmed = confirm("저장하시곘습니까?");
+        if (isConfirmed) {
+            var formData = {
+                id: $('#inputId').val(),
+                pwd: $('#inputPwd').val(),
+                u_name: $('#inputName').val(),
+                date_birth: $('#inputDateOfBirth').val(),
+                gender: $('#inputGender').val(),
+                email: $('#inputEmail').val(),
+                nickname: $('#inputNickname').val(),
+                residence: $('#inputResidence').val(),
+                phone: $('#inputPhoneNumber').val(),
+                point: $('#inputPoint').val()
+            };
+
+            console.log(formData);
+
+                $.ajax({
+                    url: '/insertUser',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function(response) {
+                        if (response === "success") {
+                            alert('저장되었습니다');
+
+                            window.location.href = '/adminUserList/1';
+
+                        } else {
+                            alert('저장에 실패했습니다');
+                        }
+                    },
+                error: function(error) {
+                    console.error(error); // 오류 정보 출력
+                    alert('서버 오류로 저장에 실패했습니다.');
+                }
+            });
+        }
+    });
+
+
+        /* 회원정보 삭제기능 */
     $(".btn-primary-delete").on('click', function() {
         console.log('회원정보 삭제기능 동작');
         const isConfirmed = confirm("정말로 삭제하겠습니까?");
