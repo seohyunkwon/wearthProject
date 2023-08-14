@@ -42,7 +42,7 @@ public class AdminDBManager extends DBManager {
 
 
 
-    public static int InsertUser(UsersVO u){
+    public static int insertUser(UsersVO u){
         int re = -1;
         SqlSession session = sqlSessionFactory.openSession();
         re = session.insert("admin.insertUser", u);
@@ -51,6 +51,14 @@ public class AdminDBManager extends DBManager {
         return re;
     }
 
+    public static int updateUser(UsersVO u){
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.update("admin.updateUser", u);
+        session.commit();
+        session.close();
+        return re;
+    }
     public static int deleteUser(int userno){
 
         int re = -1;

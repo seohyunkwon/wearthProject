@@ -51,7 +51,7 @@ $(document).ready(function() {
     $('#saveButton').click(function() {
         // 확인 메시지 띄우기
 
-        const isConfirmed = confirm("저장하시곘습니까?");
+        const isConfirmed = confirm("저장하시겠습니까?");
         if (isConfirmed) {
             var formData = {
                 id: $('#inputId').val(),
@@ -94,6 +94,73 @@ $(document).ready(function() {
         }
     });
 
+    // 수정 버튼 클릭 시
+    $(document).on("click", ".btn-primary-update", function() {
+        // 현재 클릭한 수정 버튼에 대한 사용자 번호 가져오기
+        console.log('수정버튼클릭됨');
+
+        const userId = $(this).data('user-id');
+
+        console.log('userId' + userId);
+
+        // 상세 정보 모달 숨기기
+        $("#model-" + userId).modal("hide");
+
+        // 해당 사용자의 수정 모달 보이기
+        $("#updateModal-" + userId).modal("show");
+
+        // 상세 정보 모달 레이어 제거
+        $("body").removeClass("modal-open");
+        $(".modal-backdrop").remove();
+    });
+
+    // 수정 내용 저장
+    $(document).on("click", ".btn-primary-save", function() {
+        const userId = $(this).data('user-id');
+        const isConfirmed2 = confirm("수정사항을 저장하시겠습니까?");
+
+        if (isConfirmed2) {
+            var formData2 = {
+                pwd: $('#updatePwd-' + userId).val(),
+                u_name: $('#updateName-' + userId).val(),
+                date_birth: $('#updateDateOfBirth-' + userId).val(),
+                gender: $('#updateGender-' + userId).val(),
+                email: $('#updateEmail-' + userId).val(),
+                nickname: $('#updateNickname-' + userId).val(),
+                residence: $('#updateResidence-' + userId).val(),
+                phone: $('#updatePhone-' + userId).val(),
+                point: $('#updatePoint-' + userId).val()
+            };
+            console.log('formData2의 값은', formData2);
+
+
+            $.ajax({
+                url: '/updateUser',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData2),
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(response) {
+                    if (response === "success") {
+                        alert('저장되었습니다');
+                        window.location.href = '/adminUserList/1';
+                    } else {
+                        alert('저장에 실패했습니다');
+                        window.location.href = '/adminUserList/1';
+
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                    alert('서버 오류로 저장에 실패했습니다.');
+                    window.location.href = '/adminUserList/1';
+
+                }
+            });
+        }
+    });
 
         /* 회원정보 삭제기능 */
     $(".btn-primary-delete").on('click', function() {

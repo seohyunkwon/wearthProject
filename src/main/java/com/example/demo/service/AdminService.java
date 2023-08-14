@@ -27,6 +27,10 @@ public class AdminService {
     public int insertUser(UsersVO u){
         return repository.insertUser(u);
     }
+
+    public int updateUser(UsersVO u){
+        return repository.updateUser(u);
+    }
     public int deleteUser(int userno) {
         return repository.deleteUser(userno);
     }

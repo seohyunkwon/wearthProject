@@ -31,7 +31,7 @@
                         <div class="col-md-total-list">
                             회원 수
                             <div class="col-total-circle">
-                                <span class="col-total-static">2,000</span>
+                                <span th:text="${totalUser}" class="col-total-static" ></span>
                             </div>
                         </div>
                         <div class="col-md-total-list">
@@ -43,19 +43,19 @@
                         <div class="col-md-total-list">
                             봉사하기
                             <div class="col-total-circle">
-                                <span class="col-total-static">2,000</span>
+                                <span th:text="${totalVolunteer}" class="col-total-static"></span>
                             </div>
                         </div>
                         <div class="col-md-total-list">
                             강연하기
                             <div class="col-total-circle">
-                                <span class="col-total-static">2,000</span>
+                                <span th:text="${totalLecture}" class="col-total-static"></span>
                             </div>
                         </div>
                         <div class="col-md-total-list">
                             교육하기
                             <div class="col-total-circle">
-                                <span class="col-total-static">2,000</span>
+                                <span th:text="${totalEducation}" class="col-total-static"></span>
                             </div>
                         </div>
                     </div>

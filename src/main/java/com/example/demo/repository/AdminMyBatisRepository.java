@@ -35,7 +35,11 @@ public class AdminMyBatisRepository {
 	}
 
 	public int insertUser(UsersVO u){
-		return AdminDBManager.InsertUser(u);
+		return AdminDBManager.insertUser(u);
+	}
+
+	public int updateUser(UsersVO u){
+		return AdminDBManager.updateUser(u);
 	}
 	public int deleteUser(int userno){
 		return AdminDBManager.deleteUser(userno);

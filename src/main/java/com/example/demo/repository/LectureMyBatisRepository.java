@@ -23,5 +23,9 @@ public class LectureMyBatisRepository {
 	public int insertLecture(LectureVO l) {
 		return SchoolDBManager.insertLecture(l);
 	}
+
+	public int getTotalLecture(){
+		return SchoolDBManager.getTotalLecture();
+	}
 	
 }
