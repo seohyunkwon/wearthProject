@@ -36,6 +36,11 @@ public class lectureService {
 	private ReviewMyBatisRepository review_MB;
 
 //MB (조회)
+	// 총 강의 게시물 수
+	public int getTotalLecture(){
+		return dao_MB.getTotalLecture();
+	}
+
 	// 강의 전체목록 반환
 	public List<LectureVO> findAllLecture(){
 		return dao_MB.findAllLecture();

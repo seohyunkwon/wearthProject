@@ -11,7 +11,6 @@ import com.example.demo.repository.EducationMyBatisRepository;
 import com.example.demo.repository.LikedMybatisRepository;
 import com.example.demo.repository.ReviewMyBatisRepository;
 import com.example.demo.vo.EducationVO;
-import com.example.demo.vo.LikedVO;
 import com.example.demo.vo.OpinionVO;
 
 import lombok.Setter;
@@ -33,6 +32,11 @@ public class EducationService  {
 	private ReviewMyBatisRepository review_MB;
 
 //MB (조회)
+	// 총 교육 게시물 수
+	public int getTotalEducation(){
+		return dao_MB.getTotalEducation();
+	}
+
 	// 기본 래코드수
 	public int getTotalRecordEducation(HashMap<String, Object> map) {
 		return dao_MB.getTotalRecordEducation(map);

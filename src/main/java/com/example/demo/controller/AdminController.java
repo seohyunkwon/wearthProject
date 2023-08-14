@@ -2,14 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.AdminMyBatisRepository;
 import com.example.demo.service.AdminService;
+import com.example.demo.service.EducationService;
+import com.example.demo.service.VolunteerService;
+import com.example.demo.service.lectureService;
 import com.example.demo.vo.UsersVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,15 +23,32 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private EducationService educationService;
+
+    @Autowired
+    private VolunteerService volunteerService;
+
+    @Autowired
+    private lectureService lectureService;
+
     @GetMapping("/admin")
     public String admin1(){
         return "admin/Main";
     }
 
 
-    //DashBoard
+    //*****************************DashBoard*****************************
     @GetMapping("/adminDashBoard")
     public String adminDashBoard(Model model){
+
+        //통계표시
+        //회원, 실천하기, 봉사하기, 강연, 교육, 구매, 판매금액, 신고건수, 문의게시판
+        model.addAttribute("totalUser", adminService.getTotalUser());
+        model.addAttribute("totalVolunteer", volunteerService.getTotalRecord());
+        model.addAttribute("totalLecture", lectureService.getTotalLecture());
+        model.addAttribute("totalEducation", educationService.getTotalEducation());
+
         return "admin/DashBoard/DashBoard";
     }
 
@@ -83,6 +101,38 @@ public class AdminController {
         }
     }
 
+    //**************************회원추가기능 ************************//
+    @PostMapping("/checkId")
+    @ResponseBody
+    public String checkId(@RequestParam String id) {
+        int result = adminService.checkId(id);
+
+        if (result == 1)
+            return "success";
+        else
+            return "fail";
+    }
+
+    @PostMapping("/insertUser")
+    @ResponseBody
+    public String insertUser(@RequestBody UsersVO u){
+        int result = adminService.insertUser(u);
+        System.out.println("insert됐는지확인하기 result 값은" + result);
+        if(result == 1 )
+            return "success";
+        else
+            return "fail";
+    }
+
+    @PostMapping("/updateUser")
+    @ResponseBody
+    public String updateUser(@RequestBody UsersVO u){
+        int result = adminService.updateUser(u);
+        if(result == 1)
+            return "success";
+        else
+            return "updateUser fail";
+    }
     //AdminList
 
     @GetMapping("/adminAdminList")

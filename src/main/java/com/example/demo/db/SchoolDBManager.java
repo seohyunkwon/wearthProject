@@ -13,7 +13,15 @@ import com.example.demo.vo.TrainingRequestVO;
 public class SchoolDBManager extends DBManager{
 
 	// lecture
-		
+
+		// 총 강연 수
+		public static int getTotalLecture(){
+			int n = 0;
+			SqlSession session = sqlSessionFactory.openSession();
+			n = session.selectOne("lecture.getTotalLecture");
+			return n;
+		}
+
 		// 강의 전체목록 반환 
 		public static List<LectureVO> findAllLecture () {
 			SqlSession session = sqlSessionFactory.openSession();
@@ -92,7 +100,16 @@ public class SchoolDBManager extends DBManager{
 	
 		
 // education
-		//기본 레코드수	
+		//총 교육수
+		public static int getTotalEducation(){
+			int n = 0;
+			SqlSession session = sqlSessionFactory.openSession();
+			n = session.selectOne("education.getTotalEducation");
+			session.close();
+			return n;
+		}
+
+		//기본 레코드수
 		public static int getTotalRecordEducation(HashMap<String, Object> map)	{
 			int n = 0;
 			SqlSession session = sqlSessionFactory.openSession();

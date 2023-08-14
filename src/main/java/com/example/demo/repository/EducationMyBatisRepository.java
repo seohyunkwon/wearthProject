@@ -13,7 +13,12 @@ public class EducationMyBatisRepository {
 	public static int pageSize =12;
 	public static int totalRecord;
 	public static int totalPage;
-	
+
+	// 총 교육 게시물 수
+	public int getTotalEducation(){
+		return SchoolDBManager.getTotalEducation();
+	}
+
 	// 기본 래코드수
 	public int getTotalRecordEducation(HashMap<String, Object> map) {
 		return SchoolDBManager.getTotalRecordEducation(map);

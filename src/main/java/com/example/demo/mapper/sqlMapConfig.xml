@@ -5,6 +5,7 @@
 <configuration>
 
 	<properties resource="com/example/demo/db/db.properties"></properties>
+
 	<typeAliases>
 		<!-- 전수진 -->
 		<typeAlias type="com.example.demo.vo.BoardVO" alias="boardVO" />
@@ -42,6 +43,7 @@
 				<property name="password" value="${password}" />
 			</dataSource>
 		</environment>
+
 	</environments>
 	<mappers>
 		<!-- 전수진 -->

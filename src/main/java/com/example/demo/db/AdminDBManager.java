@@ -1,5 +1,6 @@
 package com.example.demo.db;
 
+import com.example.demo.vo.LectureVO;
 import com.example.demo.vo.OrdersDetailGoodsVO;
 import com.example.demo.vo.OrdersVO;
 import com.example.demo.vo.UsersVO;
@@ -28,6 +29,36 @@ public class AdminDBManager extends DBManager {
         return n;
     }
 
+    public static int checkId(String id){
+        int re = -1; // 기본값 설정
+        SqlSession session = sqlSessionFactory.openSession();
+        String result = session.selectOne("admin.checkId", id); // Integer로 받기
+        System.out.println(result);
+        if (result != null) { // null 체크
+            return 1;
+        }
+        return re;
+    }
+
+
+
+    public static int insertUser(UsersVO u){
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.insert("admin.insertUser", u);
+        session.commit();
+        session.close();
+        return re;
+    }
+
+    public static int updateUser(UsersVO u){
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.update("admin.updateUser", u);
+        session.commit();
+        session.close();
+        return re;
+    }
     public static int deleteUser(int userno){
 
         int re = -1;

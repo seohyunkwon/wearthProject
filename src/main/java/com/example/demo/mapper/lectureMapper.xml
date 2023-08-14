@@ -12,11 +12,16 @@
  	<select id="findByNoLecture" resultType="lectureVO">
 	 	select * from lecture where lecNO = #{lecNO}
     </select>
- 	
+
  	<insert id="insertLecture" parameterType="lectureVO">
  		insert into lecture values (seq_lecture.nextval,#{lecName},#{lecContent},#{lecStatus},to_date(#{lecDate},'yyyy-mm-dd'),#{lecAddr},#{lecturer},#{lecApp},#{lecPhone},#{lecPrice},#{lecFile},#{lecDetailFile},sysdate)
  	</insert>
- 	
+
+	<!-- 총 강연 게시글 수 -->
+	<select id="getTotalLecture" resultType="java.lang.Integer">
+		select count(*) from lecture
+	</select>
+
  	<!-- JPA 사용으로 삭제예정
  	<update id="updateLecture" parameterType="lectureVO">
  	update lecture set lecName=#{lecName},leccontent=#{leccontent},lecdate=#{lecdate},lecaddr=#{lecaddr},lecturer=#{lecturer},lecapp=#{lecapp}, lecphone=#{lecphone},lecprice=#{lecprice},lecfile=#{lecfile} where lecNo=#{lecNo}

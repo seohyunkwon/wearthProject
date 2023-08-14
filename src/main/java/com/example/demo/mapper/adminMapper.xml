@@ -4,7 +4,28 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
 
-    <!-- 회원 테이블 조회 -->
+    <!--****************************************DashBoard **********************************-->
+    <!-- 총 회원수 조회 -->
+    <select id = "getTotalUser" resultType = "java.lang.Integer">
+        select count(*) from users
+    </select>
+    <!-- 실천하기 조회 -->
+
+    <!-- 봉사하기 조회 -->
+    <!-- 강연하기 조회 -->
+    <!-- 교육하기 조회 -->
+
+    <!-- 구매 건수 조회 -->
+    <!-- 판매금액 조회 -->
+    <!-- 신고 건수 조회 -->
+    <!-- 문의게시판 수 조회-->
+
+    <!-- ****************************************adminUserList *****************************-->
+    <!-- 검색기능 -->
+    <select id = "searchUser">
+
+    </select>
+
 
     <!-- 유저리스트 -->
     <select id = "getTotalUserList" resultType="usersVO">
@@ -18,15 +39,28 @@
 
     </select>
 
+
+    <!-- 아이디 중복확인 -->
+    <select id ="checkId" resultType = "java.lang.Integer">
+        SELECT id FROM users WHERE id = #{id}
+    </select>
+
+    <!-- 회원등록 -->
+    <insert id="insertUser">
+        INSERT INTO users (userno, id, pwd, u_name, date_birth, gender, email, nickname, date_reg, residence, phone, point, u_status, Role)
+        VALUES (seq_userno.NEXTVAL, #{id}, #{pwd}, #{u_name}, #{date_birth}, #{gender}, #{email}, #{nickname}, sysdate, #{residence}, #{phone}, #{point}, 'Y', 'USER')
+    </insert>
+
+    <!-- 회원수정 -->
+    <update id="updateUser">
+        UPDATE users SET pwd = #{pwd}, u_name = #{u_name}, date_birth = #{date_birth}, gender = #{gender}, nickname = #{nickname}, residence = #{residence}, phone = #{phone}, point = #{point}
+        WHERE userno = #{userno}
+    </update>
+
     <!-- 회원삭제 -->
     <delete id = "deleteUser">
         delete from users where userno = #{userno}
     </delete>
-
-    <!-- 총 회원수 -->
-    <select id = "getTotalUser" resultType = "java.lang.Integer">
-        select count(*) from users
-    </select>
 
 
 </mapper>

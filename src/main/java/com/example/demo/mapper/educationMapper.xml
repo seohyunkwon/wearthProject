@@ -19,7 +19,12 @@
 			    </if>
 		    </if>
 		</select>
-	 	
+
+		<!-- 전체레코드 반환 카테고리 분류 없음-->
+		<select id = "getTotalEducation" resultType="java.lang.Integer">
+			select count(*) from education
+		</select>
+
 	<!-- 교육 전체목록 반환 (기본권한)-->
 	  <select id="findAllEducation" resultType="educationVO">
 	    select eduno, eduName, eduContent, eduStatus, eduApp, eduAddr, educator, eduPhone, eduFile, eduDetailFile, edusysdate 
