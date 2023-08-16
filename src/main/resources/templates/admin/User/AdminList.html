@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+
+</head>
+
+<body>
+
+<!-- 여기다가 adminHeader.html넣기-->
+<div th:include="admin/Header/Header.html"></div>
+
+<main>
+    <!-- Side Bar 메뉴-->
+    <div th:include="admin/Side/Sidebar.html"></div>
+
+    <!-- 메인 컨테이너 -->
+    <div class = "Container" th:include="admin/Container/User/ContainerAdminList.html"></div>
+</main>
+
+</body>
+
+</html>

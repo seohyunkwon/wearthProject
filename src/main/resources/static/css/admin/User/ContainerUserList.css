@@ -1,0 +1,87 @@
+.container-userlist{
+    margin-left: 5rem;
+    margin-top : 5rem;
+}
+
+/*회원검색기능*/
+.div-userlist-searching{
+    margin-bottom : 5rem;
+}
+
+.div-userlist-searching-title{
+    margin-bottom: 1rem;
+}
+
+.div-userlist-searching-container{
+    display:flex;
+}
+
+.table-userlist-title{
+    margin-bottom : 1rem;
+}
+
+/*text*/
+
+.input-group {
+    width : 17rem;
+    margin-right: 0.5rem;
+}
+.input-group-text{
+    width : 7rem;
+    display: flex;
+    justify-content: center; /* justify-items 로 하면 안됨 */
+    align-items: center;
+}
+
+/* dropdown*/
+
+/* 테이블 속성 */
+
+
+.table-hover tbody tr:hover {
+    cursor: pointer;
+}
+
+.col-no {
+    width: 2rem;
+}
+
+.col-name {
+    width: 100px;
+}
+
+.col-id {
+    width: 100px;
+}
+
+.col-pwd {
+    width: 150px;
+}
+
+.col-birth {
+    width: 100px;
+}
+
+.col-gender {
+    width: 50px;
+}
+
+.col-nickname {
+    width: 100px;
+}
+
+.col-regdate {
+    width: 150px;
+}
+
+.col-location {
+    width: 200px;
+}
+
+.col-phone {
+    width: 150px;
+}
+
+.col-point {
+    width: 100px;
+}

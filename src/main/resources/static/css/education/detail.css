@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+
+	/*상세페이지*/
+	.col-md-8 {
+	    flex: 0 0 auto;
+	    width: 60%;
+	}
+	
+	.col-md-4 {
+    flex: 0 0 auto;
+    width: 40%;
+	}
+	
+	.detailImg{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 50px;
+		width: 650px;
+		height: 600px;
+	}
+	
+	.btn-group.btn-group-sm {
+		  display: flex;
+		  width: 100%;
+		  float: left;
+		  margin-top: 30px;
+		  margin-bottom: 50px;
+		}
+		
+	.btn-outline-secondary {
+		width:100%;
+    --bs-btn-color: rgb(106, 106, 106);
+    --bs-btn-border-color:#f3f3f3;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #f3f3f3;
+    --bs-btn-hover-border-color: #f3f3f3;
+    --bs-btn-focus-shadow-rgb: 108,117,125;
+    --bs-btn-active-color: rgb(106, 106, 106);
+    --bs-btn-active-bg: #f3f3f3;
+    --bs-btn-active-border-color: #f3f3f3;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #f3f3f3;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color:#f3f3f3;
+    --bs-gradient: none;
+	}
+	
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      
